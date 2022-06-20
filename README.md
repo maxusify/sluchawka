@@ -1,3 +1,3 @@
-# spotify-playlists
+# sluchawka
 
-wip
+Platform for sharing playlists and music collections on-line.
