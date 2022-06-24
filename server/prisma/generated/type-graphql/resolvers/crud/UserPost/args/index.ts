@@ -1,0 +1,12 @@
+export { AggregateUserPostArgs } from "./AggregateUserPostArgs";
+export { CreateManyUserPostArgs } from "./CreateManyUserPostArgs";
+export { CreateUserPostArgs } from "./CreateUserPostArgs";
+export { DeleteManyUserPostArgs } from "./DeleteManyUserPostArgs";
+export { DeleteUserPostArgs } from "./DeleteUserPostArgs";
+export { FindFirstUserPostArgs } from "./FindFirstUserPostArgs";
+export { FindManyUserPostArgs } from "./FindManyUserPostArgs";
+export { FindUniqueUserPostArgs } from "./FindUniqueUserPostArgs";
+export { GroupByUserPostArgs } from "./GroupByUserPostArgs";
+export { UpdateManyUserPostArgs } from "./UpdateManyUserPostArgs";
+export { UpdateUserPostArgs } from "./UpdateUserPostArgs";
+export { UpsertUserPostArgs } from "./UpsertUserPostArgs";

@@ -8,12 +8,6 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const main = async () => {
     const app = (0, express_1.default)();
-    const allUsers = await prisma.user.findMany({
-        include: {
-            artist: true,
-        },
-    });
-    console.dir(allUsers, { depth: null });
     app.listen(4000, () => {
         console.log(`Server started on http://localhost:4000`);
     });

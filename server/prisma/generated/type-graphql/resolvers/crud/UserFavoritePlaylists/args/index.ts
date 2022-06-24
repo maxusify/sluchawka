@@ -1,0 +1,12 @@
+export { AggregateUserFavoritePlaylistsArgs } from "./AggregateUserFavoritePlaylistsArgs";
+export { CreateManyUserFavoritePlaylistsArgs } from "./CreateManyUserFavoritePlaylistsArgs";
+export { CreateUserFavoritePlaylistsArgs } from "./CreateUserFavoritePlaylistsArgs";
+export { DeleteManyUserFavoritePlaylistsArgs } from "./DeleteManyUserFavoritePlaylistsArgs";
+export { DeleteUserFavoritePlaylistsArgs } from "./DeleteUserFavoritePlaylistsArgs";
+export { FindFirstUserFavoritePlaylistsArgs } from "./FindFirstUserFavoritePlaylistsArgs";
+export { FindManyUserFavoritePlaylistsArgs } from "./FindManyUserFavoritePlaylistsArgs";
+export { FindUniqueUserFavoritePlaylistsArgs } from "./FindUniqueUserFavoritePlaylistsArgs";
+export { GroupByUserFavoritePlaylistsArgs } from "./GroupByUserFavoritePlaylistsArgs";
+export { UpdateManyUserFavoritePlaylistsArgs } from "./UpdateManyUserFavoritePlaylistsArgs";
+export { UpdateUserFavoritePlaylistsArgs } from "./UpdateUserFavoritePlaylistsArgs";
+export { UpsertUserFavoritePlaylistsArgs } from "./UpsertUserFavoritePlaylistsArgs";
