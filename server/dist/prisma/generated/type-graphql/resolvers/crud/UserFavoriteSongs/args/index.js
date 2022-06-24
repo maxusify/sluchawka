@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpsertUserFavoriteSongsArgs = exports.UpdateUserFavoriteSongsArgs = exports.UpdateManyUserFavoriteSongsArgs = exports.GroupByUserFavoriteSongsArgs = exports.FindUniqueUserFavoriteSongsArgs = exports.FindManyUserFavoriteSongsArgs = exports.FindFirstUserFavoriteSongsArgs = exports.DeleteUserFavoriteSongsArgs = exports.DeleteManyUserFavoriteSongsArgs = exports.CreateUserFavoriteSongsArgs = exports.CreateManyUserFavoriteSongsArgs = exports.AggregateUserFavoriteSongsArgs = void 0;
+var AggregateUserFavoriteSongsArgs_1 = require("./AggregateUserFavoriteSongsArgs");
+Object.defineProperty(exports, "AggregateUserFavoriteSongsArgs", { enumerable: true, get: function () { return AggregateUserFavoriteSongsArgs_1.AggregateUserFavoriteSongsArgs; } });
+var CreateManyUserFavoriteSongsArgs_1 = require("./CreateManyUserFavoriteSongsArgs");
+Object.defineProperty(exports, "CreateManyUserFavoriteSongsArgs", { enumerable: true, get: function () { return CreateManyUserFavoriteSongsArgs_1.CreateManyUserFavoriteSongsArgs; } });
+var CreateUserFavoriteSongsArgs_1 = require("./CreateUserFavoriteSongsArgs");
+Object.defineProperty(exports, "CreateUserFavoriteSongsArgs", { enumerable: true, get: function () { return CreateUserFavoriteSongsArgs_1.CreateUserFavoriteSongsArgs; } });
+var DeleteManyUserFavoriteSongsArgs_1 = require("./DeleteManyUserFavoriteSongsArgs");
+Object.defineProperty(exports, "DeleteManyUserFavoriteSongsArgs", { enumerable: true, get: function () { return DeleteManyUserFavoriteSongsArgs_1.DeleteManyUserFavoriteSongsArgs; } });
+var DeleteUserFavoriteSongsArgs_1 = require("./DeleteUserFavoriteSongsArgs");
+Object.defineProperty(exports, "DeleteUserFavoriteSongsArgs", { enumerable: true, get: function () { return DeleteUserFavoriteSongsArgs_1.DeleteUserFavoriteSongsArgs; } });
+var FindFirstUserFavoriteSongsArgs_1 = require("./FindFirstUserFavoriteSongsArgs");
+Object.defineProperty(exports, "FindFirstUserFavoriteSongsArgs", { enumerable: true, get: function () { return FindFirstUserFavoriteSongsArgs_1.FindFirstUserFavoriteSongsArgs; } });
+var FindManyUserFavoriteSongsArgs_1 = require("./FindManyUserFavoriteSongsArgs");
+Object.defineProperty(exports, "FindManyUserFavoriteSongsArgs", { enumerable: true, get: function () { return FindManyUserFavoriteSongsArgs_1.FindManyUserFavoriteSongsArgs; } });
+var FindUniqueUserFavoriteSongsArgs_1 = require("./FindUniqueUserFavoriteSongsArgs");
+Object.defineProperty(exports, "FindUniqueUserFavoriteSongsArgs", { enumerable: true, get: function () { return FindUniqueUserFavoriteSongsArgs_1.FindUniqueUserFavoriteSongsArgs; } });
+var GroupByUserFavoriteSongsArgs_1 = require("./GroupByUserFavoriteSongsArgs");
+Object.defineProperty(exports, "GroupByUserFavoriteSongsArgs", { enumerable: true, get: function () { return GroupByUserFavoriteSongsArgs_1.GroupByUserFavoriteSongsArgs; } });
+var UpdateManyUserFavoriteSongsArgs_1 = require("./UpdateManyUserFavoriteSongsArgs");
+Object.defineProperty(exports, "UpdateManyUserFavoriteSongsArgs", { enumerable: true, get: function () { return UpdateManyUserFavoriteSongsArgs_1.UpdateManyUserFavoriteSongsArgs; } });
+var UpdateUserFavoriteSongsArgs_1 = require("./UpdateUserFavoriteSongsArgs");
+Object.defineProperty(exports, "UpdateUserFavoriteSongsArgs", { enumerable: true, get: function () { return UpdateUserFavoriteSongsArgs_1.UpdateUserFavoriteSongsArgs; } });
+var UpsertUserFavoriteSongsArgs_1 = require("./UpsertUserFavoriteSongsArgs");
+Object.defineProperty(exports, "UpsertUserFavoriteSongsArgs", { enumerable: true, get: function () { return UpsertUserFavoriteSongsArgs_1.UpsertUserFavoriteSongsArgs; } });
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpsertUserPostArgs = exports.UpdateUserPostArgs = exports.UpdateManyUserPostArgs = exports.GroupByUserPostArgs = exports.FindUniqueUserPostArgs = exports.FindManyUserPostArgs = exports.FindFirstUserPostArgs = exports.DeleteUserPostArgs = exports.DeleteManyUserPostArgs = exports.CreateUserPostArgs = exports.CreateManyUserPostArgs = exports.AggregateUserPostArgs = void 0;
+var AggregateUserPostArgs_1 = require("./AggregateUserPostArgs");
+Object.defineProperty(exports, "AggregateUserPostArgs", { enumerable: true, get: function () { return AggregateUserPostArgs_1.AggregateUserPostArgs; } });
+var CreateManyUserPostArgs_1 = require("./CreateManyUserPostArgs");
+Object.defineProperty(exports, "CreateManyUserPostArgs", { enumerable: true, get: function () { return CreateManyUserPostArgs_1.CreateManyUserPostArgs; } });
+var CreateUserPostArgs_1 = require("./CreateUserPostArgs");
+Object.defineProperty(exports, "CreateUserPostArgs", { enumerable: true, get: function () { return CreateUserPostArgs_1.CreateUserPostArgs; } });
+var DeleteManyUserPostArgs_1 = require("./DeleteManyUserPostArgs");
+Object.defineProperty(exports, "DeleteManyUserPostArgs", { enumerable: true, get: function () { return DeleteManyUserPostArgs_1.DeleteManyUserPostArgs; } });
+var DeleteUserPostArgs_1 = require("./DeleteUserPostArgs");
+Object.defineProperty(exports, "DeleteUserPostArgs", { enumerable: true, get: function () { return DeleteUserPostArgs_1.DeleteUserPostArgs; } });
+var FindFirstUserPostArgs_1 = require("./FindFirstUserPostArgs");
+Object.defineProperty(exports, "FindFirstUserPostArgs", { enumerable: true, get: function () { return FindFirstUserPostArgs_1.FindFirstUserPostArgs; } });
+var FindManyUserPostArgs_1 = require("./FindManyUserPostArgs");
+Object.defineProperty(exports, "FindManyUserPostArgs", { enumerable: true, get: function () { return FindManyUserPostArgs_1.FindManyUserPostArgs; } });
+var FindUniqueUserPostArgs_1 = require("./FindUniqueUserPostArgs");
+Object.defineProperty(exports, "FindUniqueUserPostArgs", { enumerable: true, get: function () { return FindUniqueUserPostArgs_1.FindUniqueUserPostArgs; } });
+var GroupByUserPostArgs_1 = require("./GroupByUserPostArgs");
+Object.defineProperty(exports, "GroupByUserPostArgs", { enumerable: true, get: function () { return GroupByUserPostArgs_1.GroupByUserPostArgs; } });
+var UpdateManyUserPostArgs_1 = require("./UpdateManyUserPostArgs");
+Object.defineProperty(exports, "UpdateManyUserPostArgs", { enumerable: true, get: function () { return UpdateManyUserPostArgs_1.UpdateManyUserPostArgs; } });
+var UpdateUserPostArgs_1 = require("./UpdateUserPostArgs");
+Object.defineProperty(exports, "UpdateUserPostArgs", { enumerable: true, get: function () { return UpdateUserPostArgs_1.UpdateUserPostArgs; } });
+var UpsertUserPostArgs_1 = require("./UpsertUserPostArgs");
+Object.defineProperty(exports, "UpsertUserPostArgs", { enumerable: true, get: function () { return UpsertUserPostArgs_1.UpsertUserPostArgs; } });
+//# sourceMappingURL=index.js.map

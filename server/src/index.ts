@@ -1,14 +1,32 @@
+import "reflect-metadata";
 import express from "express";
 import { PrismaClient } from "@prisma/client";
-import { __prod__ } from "./constants";
+import { __PORT__, __prod__ } from "./constants";
+import { ApolloServer } from "apollo-server-express";
+import { buildSchema } from "type-graphql";
+import { UserResolver } from "./resolvers/User";
 
+// Prisma Client
 const prisma = new PrismaClient();
 
 const main = async () => {
+  // Express server
   const app = express();
 
-  app.listen(4000, () => {
-    console.log(`Server started on http://localhost:4000`);
+  // Apollo server
+  const appolo = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [UserResolver],
+      validate: false,
+    }),
+    context: () => ({ prisma }),
+  });
+  await appolo.start();
+  appolo.applyMiddleware({ app });
+
+  // Listener
+  app.listen(__PORT__, () => {
+    console.log(`Server started on http://localhost:${__PORT__}`);
   });
 };
 
