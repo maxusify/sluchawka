@@ -86,10 +86,16 @@ __decorate([
 ], UserCreateInput.prototype, "updatedAt", void 0);
 __decorate([
     TypeGraphQL.Field(_type => UserRole_1.UserRole, {
-        nullable: false
+        nullable: true
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], UserCreateInput.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => String, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserCreateInput.prototype, "picture", void 0);
 __decorate([
     TypeGraphQL.Field(_type => UserProfileCreateNestedOneWithoutUserInput_1.UserProfileCreateNestedOneWithoutUserInput, {
         nullable: true

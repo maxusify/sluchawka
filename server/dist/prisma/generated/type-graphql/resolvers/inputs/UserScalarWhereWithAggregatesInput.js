@@ -108,6 +108,12 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], UserScalarWhereWithAggregatesInput.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter_1.StringNullableWithAggregatesFilter, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserScalarWhereWithAggregatesInput.prototype, "picture", void 0);
 UserScalarWhereWithAggregatesInput = UserScalarWhereWithAggregatesInput_1 = __decorate([
     TypeGraphQL.InputType("UserScalarWhereWithAggregatesInput", {
         isAbstract: true

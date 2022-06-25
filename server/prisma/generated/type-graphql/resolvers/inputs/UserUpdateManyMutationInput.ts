@@ -51,4 +51,9 @@ export class UserUpdateManyMutationInput {
     nullable: true
   })
   role?: EnumUserRoleFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  picture?: NullableStringFieldUpdateOperationsInput | undefined;
 }

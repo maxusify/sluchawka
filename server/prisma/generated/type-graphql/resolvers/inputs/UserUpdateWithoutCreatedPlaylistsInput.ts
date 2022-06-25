@@ -56,6 +56,11 @@ export class UserUpdateWithoutCreatedPlaylistsInput {
   })
   role?: EnumUserRoleFieldUpdateOperationsInput | undefined;
 
+  @TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  picture?: NullableStringFieldUpdateOperationsInput | undefined;
+
   @TypeGraphQL.Field(_type => UserProfileUpdateOneWithoutUserInput, {
     nullable: true
   })

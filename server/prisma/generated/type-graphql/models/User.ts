@@ -34,10 +34,7 @@ export class User {
   })
   emailVerified!: boolean;
 
-  @TypeGraphQL.Field(_type => String, {
-    nullable: false
-  })
-  password!: string;
+  password?: string;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false
@@ -53,6 +50,11 @@ export class User {
     nullable: false
   })
   role!: "NORMAL" | "MODERATOR" | "ADMIN";
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  picture?: string | null;
 
   profile?: UserProfile | null;
 

@@ -89,6 +89,12 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], UserUpdateManyMutationInput.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput_1.NullableStringFieldUpdateOperationsInput, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserUpdateManyMutationInput.prototype, "picture", void 0);
 UserUpdateManyMutationInput = __decorate([
     TypeGraphQL.InputType("UserUpdateManyMutationInput", {
         isAbstract: true

@@ -94,6 +94,12 @@ __decorate([
     __metadata("design:type", Object)
 ], UserUpdateWithoutCreatedCommentsInput.prototype, "role", void 0);
 __decorate([
+    TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput_1.NullableStringFieldUpdateOperationsInput, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserUpdateWithoutCreatedCommentsInput.prototype, "picture", void 0);
+__decorate([
     TypeGraphQL.Field(_type => UserProfileUpdateOneWithoutUserInput_1.UserProfileUpdateOneWithoutUserInput, {
         nullable: true
     }),

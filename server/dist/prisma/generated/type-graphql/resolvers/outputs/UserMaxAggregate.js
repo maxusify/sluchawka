@@ -85,6 +85,12 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], UserMaxAggregate.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => String, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserMaxAggregate.prototype, "picture", void 0);
 UserMaxAggregate = __decorate([
     TypeGraphQL.ObjectType("UserMaxAggregate", {
         isAbstract: true

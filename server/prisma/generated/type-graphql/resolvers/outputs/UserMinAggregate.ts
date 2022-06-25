@@ -47,4 +47,9 @@ export class UserMinAggregate {
     nullable: true
   })
   role!: "NORMAL" | "MODERATOR" | "ADMIN" | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  picture!: string | null;
 }

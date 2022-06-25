@@ -51,6 +51,11 @@ export class UserGroupBy {
   })
   role!: "NORMAL" | "MODERATOR" | "ADMIN";
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  picture!: string | null;
+
   @TypeGraphQL.Field(_type => UserCountAggregate, {
     nullable: true
   })

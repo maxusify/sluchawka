@@ -72,6 +72,11 @@ export class UserWhereInput {
   })
   role?: EnumUserRoleFilter | undefined;
 
+  @TypeGraphQL.Field(_type => StringNullableFilter, {
+    nullable: true
+  })
+  picture?: StringNullableFilter | undefined;
+
   @TypeGraphQL.Field(_type => UserProfileRelationFilter, {
     nullable: true
   })

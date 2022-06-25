@@ -81,10 +81,16 @@ __decorate([
 ], UserCreateManyInput.prototype, "updatedAt", void 0);
 __decorate([
     TypeGraphQL.Field(_type => UserRole_1.UserRole, {
-        nullable: false
+        nullable: true
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], UserCreateManyInput.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => String, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserCreateManyInput.prototype, "picture", void 0);
 UserCreateManyInput = __decorate([
     TypeGraphQL.InputType("UserCreateManyInput", {
         isAbstract: true

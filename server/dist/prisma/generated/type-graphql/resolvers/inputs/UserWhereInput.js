@@ -114,6 +114,12 @@ __decorate([
     __metadata("design:type", Object)
 ], UserWhereInput.prototype, "role", void 0);
 __decorate([
+    TypeGraphQL.Field(_type => StringNullableFilter_1.StringNullableFilter, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserWhereInput.prototype, "picture", void 0);
+__decorate([
     TypeGraphQL.Field(_type => UserProfileRelationFilter_1.UserProfileRelationFilter, {
         nullable: true
     }),

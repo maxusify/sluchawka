@@ -13,23 +13,122 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
-const type_graphql_1 = require("type-graphql");
-const type_graphql_2 = require("../../prisma/generated/type-graphql/");
+const client_1 = require("@prisma/client");
+const argon2_1 = require("argon2");
+const type_graphql_1 = require("../../prisma/generated/type-graphql");
+const type_graphql_2 = require("type-graphql");
+const UserAuthArgs_1 = require("./types/UserAuthArgs");
+const UserResponse_1 = require("./types/UserResponse");
 let UserResolver = class UserResolver {
-    user(ctx, email) {
-        ctx.prisma.user.findFirst({});
+    async register(ctx, args) {
+        const isUserExist = await ctx.user.findUnique({
+            where: {
+                email: args.data.email,
+            },
+        });
+        if (isUserExist !== null) {
+            return {
+                errors: [
+                    {
+                        field: "email",
+                        message: "Provided email address is already in use.",
+                    },
+                ],
+            };
+        }
+        if (args.data.email.length <= 2) {
+            return {
+                errors: [
+                    {
+                        field: "email",
+                        message: "Length must be greater than 2.",
+                    },
+                ],
+            };
+        }
+        if (args.data.password.length <= 7) {
+            return {
+                errors: [
+                    {
+                        field: "password",
+                        message: "Password length must contain at least 8 characters.",
+                    },
+                ],
+            };
+        }
+        const hashedPassword = await (0, argon2_1.hash)(args.data.password);
+        try {
+            const user = await ctx.user.create({
+                data: { email: args.data.email, password: hashedPassword },
+            });
+            return { user };
+        }
+        catch (error) {
+            console.error(error);
+            return {
+                errors: [
+                    {
+                        field: "null",
+                        message: "Internal server error.",
+                    },
+                ],
+            };
+        }
+    }
+    async login(ctx, args) {
+        const user = await ctx.user.findUnique({
+            where: {
+                email: args.data.email,
+            },
+        });
+        if (!user) {
+            return {
+                errors: [
+                    {
+                        field: "email",
+                        message: "Provided email address does not match with any existing user.",
+                    },
+                ],
+            };
+        }
+        const valid = await (0, argon2_1.verify)(user.password, args.data.password);
+        if (!valid) {
+            return {
+                errors: [
+                    {
+                        field: "password",
+                        message: "Provided password is incorrect.",
+                    },
+                ],
+            };
+        }
+        return { user };
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => type_graphql_2.User),
-    __param(0, (0, type_graphql_1.Ctx)()),
-    __param(1, (0, type_graphql_1.Arg)("email")),
+    (0, type_graphql_2.Mutation)(() => UserResponse_1.UserResponse, {
+        nullable: false,
+    }),
+    __param(0, (0, type_graphql_2.Ctx)("prisma")),
+    __param(1, (0, type_graphql_2.Args)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", void 0)
-], UserResolver.prototype, "user", null);
+    __metadata("design:paramtypes", [client_1.PrismaClient,
+        UserAuthArgs_1.UserAuthArgs]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "register", null);
+__decorate([
+    (0, type_graphql_2.Mutation)(() => UserResponse_1.UserResponse, {
+        nullable: false,
+    }),
+    __param(0, (0, type_graphql_2.Ctx)("prisma")),
+    __param(1, (0, type_graphql_2.Args)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_1.PrismaClient,
+        UserAuthArgs_1.UserAuthArgs]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "login", null);
 UserResolver = __decorate([
-    (0, type_graphql_1.Resolver)()
+    (0, type_graphql_2.Resolver)(() => type_graphql_1.User)
 ], UserResolver);
 exports.UserResolver = UserResolver;
 //# sourceMappingURL=User.js.map

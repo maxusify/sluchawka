@@ -24,14 +24,16 @@ enum UserRole {
 
 // User
 model User {
-  id               String                @id @default(uuid())
+  id               String                 @id @default(uuid())
   name             String?
-  email            String                @unique
-  emailVerified    Boolean               @default(false)
+  email            String                 @unique
+  emailVerified    Boolean                @default(false)
+  /// @TypeGraphQL.omit(output: true)
   password         String
-  createdAt        DateTime              @default(now())
-  updatedAt        DateTime              @updatedAt
-  role             UserRole
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  role             UserRole               @default(NORMAL)
+  picture          String?
   profile          UserProfile?
   createdPosts     UserPost[]
   createdComments  UserProfileComments[]

@@ -85,6 +85,12 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], UserMinAggregate.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => String, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserMinAggregate.prototype, "picture", void 0);
 UserMinAggregate = __decorate([
     TypeGraphQL.ObjectType("UserMinAggregate", {
         isAbstract: true

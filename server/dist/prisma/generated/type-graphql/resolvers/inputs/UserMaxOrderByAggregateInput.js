@@ -85,6 +85,12 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], UserMaxOrderByAggregateInput.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => SortOrder_1.SortOrder, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], UserMaxOrderByAggregateInput.prototype, "picture", void 0);
 UserMaxOrderByAggregateInput = __decorate([
     TypeGraphQL.InputType("UserMaxOrderByAggregateInput", {
         isAbstract: true

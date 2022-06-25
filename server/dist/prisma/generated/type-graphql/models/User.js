@@ -63,12 +63,6 @@ __decorate([
     __metadata("design:type", Boolean)
 ], User.prototype, "emailVerified", void 0);
 __decorate([
-    TypeGraphQL.Field(_type => String, {
-        nullable: false
-    }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
     TypeGraphQL.Field(_type => Date, {
         nullable: false
     }),
@@ -86,6 +80,12 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
+__decorate([
+    TypeGraphQL.Field(_type => String, {
+        nullable: true
+    }),
+    __metadata("design:type", Object)
+], User.prototype, "picture", void 0);
 __decorate([
     TypeGraphQL.Field(_type => UserCount_1.UserCount, {
         nullable: true

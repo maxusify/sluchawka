@@ -48,9 +48,14 @@ export class UserCreateWithoutProfileInput {
   updatedAt?: Date | undefined;
 
   @TypeGraphQL.Field(_type => UserRole, {
-    nullable: false
+    nullable: true
   })
-  role!: "NORMAL" | "MODERATOR" | "ADMIN";
+  role?: "NORMAL" | "MODERATOR" | "ADMIN" | undefined;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  picture?: string | undefined;
 
   @TypeGraphQL.Field(_type => UserPostCreateNestedManyWithoutAuthorInput, {
     nullable: true
