@@ -13,15 +13,22 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
-const client_1 = require("@prisma/client");
 const argon2_1 = require("argon2");
 const type_graphql_1 = require("../../prisma/generated/type-graphql");
 const type_graphql_2 = require("type-graphql");
 const UserAuthArgs_1 = require("./types/UserAuthArgs");
 const UserResponse_1 = require("./types/UserResponse");
 let UserResolver = class UserResolver {
-    async register(ctx, args) {
-        const isUserExist = await ctx.user.findUnique({
+    async me({ prisma, req }) {
+        if (!req.session.userId)
+            return null;
+        const user = await prisma.user.findUnique({
+            where: { id: req.session.userId },
+        });
+        return user;
+    }
+    async register({ prisma, req }, args) {
+        const isUserExist = await prisma.user.findUnique({
             where: {
                 email: args.data.email,
             },
@@ -58,9 +65,10 @@ let UserResolver = class UserResolver {
         }
         const hashedPassword = await (0, argon2_1.hash)(args.data.password);
         try {
-            const user = await ctx.user.create({
+            const user = await prisma.user.create({
                 data: { email: args.data.email, password: hashedPassword },
             });
+            req.session.userId = user.id;
             return { user };
         }
         catch (error) {
@@ -75,8 +83,8 @@ let UserResolver = class UserResolver {
             };
         }
     }
-    async login(ctx, args) {
-        const user = await ctx.user.findUnique({
+    async login({ prisma, req }, args) {
+        const user = await prisma.user.findUnique({
             where: {
                 email: args.data.email,
             },
@@ -102,29 +110,35 @@ let UserResolver = class UserResolver {
                 ],
             };
         }
+        req.session.userId = user.id;
         return { user };
     }
 };
 __decorate([
+    (0, type_graphql_2.Query)(() => type_graphql_1.User, { nullable: true }),
+    __param(0, (0, type_graphql_2.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "me", null);
+__decorate([
     (0, type_graphql_2.Mutation)(() => UserResponse_1.UserResponse, {
         nullable: false,
     }),
-    __param(0, (0, type_graphql_2.Ctx)("prisma")),
+    __param(0, (0, type_graphql_2.Ctx)()),
     __param(1, (0, type_graphql_2.Args)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [client_1.PrismaClient,
-        UserAuthArgs_1.UserAuthArgs]),
+    __metadata("design:paramtypes", [Object, UserAuthArgs_1.UserAuthArgs]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 __decorate([
     (0, type_graphql_2.Mutation)(() => UserResponse_1.UserResponse, {
         nullable: false,
     }),
-    __param(0, (0, type_graphql_2.Ctx)("prisma")),
+    __param(0, (0, type_graphql_2.Ctx)()),
     __param(1, (0, type_graphql_2.Args)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [client_1.PrismaClient,
-        UserAuthArgs_1.UserAuthArgs]),
+    __metadata("design:paramtypes", [Object, UserAuthArgs_1.UserAuthArgs]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "login", null);
 UserResolver = __decorate([

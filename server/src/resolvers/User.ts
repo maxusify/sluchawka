@@ -1,21 +1,31 @@
-import { PrismaClient } from "@prisma/client";
 import { hash, verify } from "argon2";
 import { User } from "../../prisma/generated/type-graphql";
-import { Args, Ctx, Mutation, Resolver } from "type-graphql";
+import { Args, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { UserAuthArgs } from "./types/UserAuthArgs";
 import { UserResponse } from "./types/UserResponse";
+import { ApolloContext } from "src/types";
 
 @Resolver(() => User)
 export class UserResolver {
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() { prisma, req }: ApolloContext) {
+    if (!req.session.userId) return null;
+
+    const user = await prisma.user.findUnique({
+      where: { id: req.session.userId },
+    });
+    return user;
+  }
+
   @Mutation(() => UserResponse, {
     nullable: false,
   })
   async register(
-    @Ctx("prisma") ctx: PrismaClient,
+    @Ctx() { prisma, req }: ApolloContext,
     @Args() args: UserAuthArgs
   ): Promise<UserResponse> {
     // Check if email already exists
-    const isUserExist = await ctx.user.findUnique({
+    const isUserExist = await prisma.user.findUnique({
       where: {
         email: args.data.email,
       },
@@ -60,9 +70,11 @@ export class UserResolver {
 
     try {
       // Call prisma to create new user
-      const user = await ctx.user.create({
+      const user = await prisma.user.create({
         data: { email: args.data.email, password: hashedPassword },
       });
+
+      req.session.userId = user.id;
 
       // return user
       return { user };
@@ -83,11 +95,11 @@ export class UserResolver {
     nullable: false,
   })
   async login(
-    @Ctx("prisma") ctx: PrismaClient,
+    @Ctx() { prisma, req }: ApolloContext,
     @Args() args: UserAuthArgs
   ): Promise<UserResponse> {
     // Find user with provided email address
-    const user = await ctx.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email: args.data.email,
       },
@@ -120,6 +132,8 @@ export class UserResolver {
         ],
       };
     }
+
+    req.session.userId = user.id;
 
     // return user
     return { user };
