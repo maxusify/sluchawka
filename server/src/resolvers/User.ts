@@ -7,6 +7,7 @@ import { ApolloContext } from "src/types";
 
 @Resolver(() => User)
 export class UserResolver {
+  // Returns object representing user
   @Query(() => User, { nullable: true })
   async me(@Ctx() { prisma, req }: ApolloContext) {
     if (!req.session.userId) return null;
@@ -17,6 +18,7 @@ export class UserResolver {
     return user;
   }
 
+  // Register
   @Mutation(() => UserResponse, {
     nullable: false,
   })
