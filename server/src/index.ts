@@ -5,6 +5,7 @@ import { __PORT__, __prod__ } from "./constants";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/User";
+import { FindUniqueUserResolver } from "../prisma/generated/type-graphql";
 
 // Prisma Client
 const prisma = new PrismaClient();
@@ -16,10 +17,12 @@ const main = async () => {
   // Apollo server
   const appolo = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, FindUniqueUserResolver],
       validate: false,
     }),
-    context: () => ({ prisma }),
+    context: () => ({
+      prisma,
+    }),
   });
   await appolo.start();
   appolo.applyMiddleware({ app });
