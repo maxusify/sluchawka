@@ -5,10 +5,7 @@ mutation Register($data: UserAuthInput!) {
       message
     }
     user {
-      id
-      email
-      createdAt
-      role
+      ...RegularUser
     }
   }
 }
