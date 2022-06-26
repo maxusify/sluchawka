@@ -14,6 +14,7 @@ import * as redis from "redis";
 import session from "express-session";
 import connectRedis from "connect-redis";
 import { ApolloContext } from "./types";
+import cors from "cors";
 
 // Prisma Client
 const prisma = new PrismaClient();
@@ -29,6 +30,14 @@ const main = async () => {
     console.error("Redis Client Error", err);
   });
   await redisClient.connect();
+
+  // Cors
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
 
   // Session
   app.use(
@@ -64,7 +73,7 @@ const main = async () => {
     ],
   });
   await appolo.start();
-  appolo.applyMiddleware({ app });
+  appolo.applyMiddleware({ app, cors: false });
 
   // Listener
   app.listen(__PORT__, () => {
