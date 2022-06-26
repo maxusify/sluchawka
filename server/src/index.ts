@@ -1,7 +1,12 @@
 import "reflect-metadata";
 import express from "express";
 import { PrismaClient } from "@prisma/client";
-import { __PORT__, __prod__, __session_secret__ } from "./constants";
+import {
+  __COOKIE_NAME__,
+  __PORT__,
+  __prod__,
+  __session_secret__,
+} from "./constants";
 import { ApolloServer } from "apollo-server-express";
 import {
   ApolloServerPluginLandingPageDisabled,
@@ -42,7 +47,7 @@ const main = async () => {
   // Session
   app.use(
     session({
-      name: "qid",
+      name: __COOKIE_NAME__,
       store: new RedisStore({ client: redisClient, disableTouch: true }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // ~month

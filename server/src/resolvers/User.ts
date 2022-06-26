@@ -4,6 +4,7 @@ import { Args, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { UserAuthArgs } from "./types/UserAuthArgs";
 import { UserResponse } from "./types/UserResponse";
 import { ApolloContext } from "src/types";
+import { __COOKIE_NAME__ } from "../../src/constants";
 
 @Resolver(() => User)
 export class UserResolver {
@@ -139,5 +140,21 @@ export class UserResolver {
 
     // return user
     return { user };
+  }
+
+  @Mutation(() => Boolean)
+  logout(@Ctx() { req, res }: ApolloContext) {
+    return new Promise((resolve) =>
+      req.session.destroy((err) => {
+        res.clearCookie(__COOKIE_NAME__);
+        if (err) {
+          console.error(err);
+          resolve(false);
+          return;
+        } else {
+          resolve(true);
+        }
+      })
+    );
   }
 }
