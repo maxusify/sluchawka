@@ -12,9 +12,83 @@ import { UserForgotPasswordArgs } from "./types/UserForgotPasswordArgs";
 import { validateRegister } from "../utils/validateRegister";
 import { sendEmail } from "../utils/sendEmail";
 import { v4 } from "uuid";
+import { UserRecoverPasswordArgs } from "./types/UserRecoverPasswordArgs";
+import { token } from "morgan";
 
 @Resolver(() => User)
 export class UserResolver {
+  @Mutation(() => UserResponse)
+  async changePassword(
+    @Ctx() { redis, prisma, req }: ApolloContext,
+    @Args() args: UserRecoverPasswordArgs
+  ): Promise<UserResponse> {
+    if (args.data.newPassword.length <= 7) {
+      // Check password length before changing it
+      return {
+        errors: [
+          {
+            field: "newPassword",
+            message: "New password length must contain at least 8 characters.",
+          },
+        ],
+      };
+    }
+    // Get user id from the token
+    const userId = await redis.get(
+      __FORGET_PASSWORD_PREFIX__ + args.data.token
+    );
+    if (!userId) {
+      return {
+        errors: [
+          {
+            field: "token",
+            message: "Token expired.",
+          },
+        ],
+      };
+    }
+    // Find user by value of the token
+    const doesUserExist = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    // If user does not exist
+    if (!doesUserExist) {
+      return {
+        errors: [
+          {
+            field: "token",
+            message: "User no longer exists.",
+          },
+        ],
+      };
+    }
+    // Hash new password
+    const newHashedPassword = await hash(args.data.newPassword);
+    // Do update user's password
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        password: newHashedPassword,
+      },
+    });
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: "token",
+            message: "Failed updating user.",
+          },
+        ],
+      };
+    }
+    // Remove token from redis
+    await redis.del(__FORGET_PASSWORD_PREFIX__ + token);
+    // Login user after changing password
+    req.session.userId = user.id;
+    // Return user
+    return { user };
+  }
+
   @Mutation(() => Boolean)
   async forgotPassword(
     @Ctx() { prisma, req, redis }: ApolloContext,
