@@ -20,6 +20,7 @@ import session from "express-session";
 import connectRedis from "connect-redis";
 import { ApolloContext } from "./types";
 import cors from "cors";
+import morgan from "morgan";
 
 // Prisma Client
 const prisma = new PrismaClient();
@@ -43,6 +44,9 @@ const main = async () => {
       credentials: true,
     })
   );
+
+  // Logger
+  app.use(morgan("dev"));
 
   // Session
   app.use(
