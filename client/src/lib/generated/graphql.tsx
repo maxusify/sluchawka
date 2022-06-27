@@ -24,9 +24,21 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  changePassword: UserResponse;
+  forgotPassword: Scalars['Boolean'];
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
+};
+
+
+export type MutationChangePasswordArgs = {
+  data: UserRecoverPasswordInput;
+};
+
+
+export type MutationForgotPasswordArgs = {
+  data: UserForgotPasswordInput;
 };
 
 
@@ -76,6 +88,15 @@ export type UserCount = {
   createdSongs: Scalars['Int'];
 };
 
+export type UserForgotPasswordInput = {
+  email: Scalars['String'];
+};
+
+export type UserRecoverPasswordInput = {
+  newPassword: Scalars['String'];
+  token: Scalars['String'];
+};
+
 export type UserResponse = {
   __typename?: 'UserResponse';
   errors?: Maybe<Array<FieldError>>;
@@ -94,6 +115,20 @@ export type UserWhereUniqueInput = {
 };
 
 export type RegularUserFragment = { __typename?: 'User', id: string, email: string, createdAt: any, role: UserRole };
+
+export type ChangePasswordMutationVariables = Exact<{
+  data: UserRecoverPasswordInput;
+}>;
+
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: string, email: string, createdAt: any, role: UserRole } | null } };
+
+export type ForgotPasswordMutationVariables = Exact<{
+  data: UserForgotPasswordInput;
+}>;
+
+
+export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: boolean };
 
 export type LoginMutationVariables = Exact<{
   data: UserAuthInput;
@@ -127,6 +162,28 @@ export const RegularUserFragmentDoc = gql`
   role
 }
     `;
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($data: UserRecoverPasswordInput!) {
+  changePassword(data: $data) {
+    user {
+      ...RegularUser
+    }
+  }
+}
+    ${RegularUserFragmentDoc}`;
+
+export function useChangePasswordMutation() {
+  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
+};
+export const ForgotPasswordDocument = gql`
+    mutation ForgotPassword($data: UserForgotPasswordInput!) {
+  forgotPassword(data: $data)
+}
+    `;
+
+export function useForgotPasswordMutation() {
+  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument);
+};
 export const LoginDocument = gql`
     mutation Login($data: UserAuthInput!) {
   login(data: $data) {
