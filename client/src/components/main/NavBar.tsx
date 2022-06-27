@@ -1,5 +1,6 @@
 import React from "react";
 import { useLogoutMutation, useMeQuery } from "../../lib/generated/graphql";
+import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -9,17 +10,19 @@ import {
   IconButton,
   SimpleGrid,
 } from "@chakra-ui/react";
+import { Icon } from "@iconify/react";
 import Logo from "./Logo";
 import MenuButton from "./MenuButton";
-import { useRouter } from "next/router";
-import { Icon } from "@iconify/react";
+import { isServer } from "../../utils/isServer";
 
 type NavBarUserSectionProps = {};
 
 const NavBarUserSection: React.FC<NavBarUserSectionProps> = (props) => {
   const router = useRouter();
-  const [{ data, fetching }] = useMeQuery();
-  const [, logout] = useLogoutMutation();
+  const [{ data, fetching }] = useMeQuery({
+    pause: isServer(),
+  });
+  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   let body = null;
 
   if (fetching) {
@@ -49,8 +52,10 @@ const NavBarUserSection: React.FC<NavBarUserSectionProps> = (props) => {
         <Button rounded="xl">{data.me.email}</Button>
         <IconButton
           rounded="xl"
-          icon={<Icon icon="bxs:down-arrow" />}
-          aria-label="Menu dropdown"
+          icon={<Icon icon="ant-design:logout-outlined" />}
+          aria-label="Log out button"
+          onClick={() => logout()}
+          isLoading={logoutFetching}
         />
       </ButtonGroup>
     );

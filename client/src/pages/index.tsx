@@ -1,5 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { NavBar } from "../components";
+import { withUrqlClient } from "next-urql";
+import { createUrqlClient } from "../utils/createUrqlClient";
 
 const Index = () => {
   return (
@@ -9,4 +11,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default withUrqlClient(createUrqlClient, { ssr: true })(Index);
