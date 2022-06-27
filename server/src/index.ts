@@ -15,7 +15,7 @@ import {
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/User";
 import { FindUniqueUserResolver } from "../prisma/generated/type-graphql";
-import * as redis from "redis";
+import Redis from "ioredis";
 import session from "express-session";
 import connectRedis from "connect-redis";
 import { ApolloContext } from "./types";
@@ -31,11 +31,10 @@ const main = async () => {
 
   // Redis Client
   const RedisStore = connectRedis(session);
-  const redisClient = redis.createClient({ legacyMode: true });
-  redisClient.on("error", (err) => {
+  const redis = new Redis();
+  redis.on("error", (err) => {
     console.error("Redis Client Error", err);
   });
-  await redisClient.connect();
 
   // Cors
   app.use(
@@ -52,7 +51,7 @@ const main = async () => {
   app.use(
     session({
       name: __COOKIE_NAME__,
-      store: new RedisStore({ client: redisClient, disableTouch: true }),
+      store: new RedisStore({ client: redis, disableTouch: true }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // ~month
         httpOnly: true,
@@ -75,6 +74,7 @@ const main = async () => {
       prisma,
       req,
       res,
+      redis,
     }),
     plugins: [
       ApolloServerPluginLandingPageGraphQLPlayground(),

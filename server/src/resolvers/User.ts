@@ -4,10 +4,46 @@ import { Args, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { UserAuthArgs } from "./types/UserAuthArgs";
 import { UserResponse } from "./types/UserResponse";
 import { ApolloContext } from "src/types";
-import { __COOKIE_NAME__ } from "../../src/constants";
+import {
+  __COOKIE_NAME__,
+  __FORGET_PASSWORD_PREFIX__,
+} from "../../src/constants";
+import { UserForgotPasswordArgs } from "./types/UserForgotPasswordArgs";
+import { validateRegister } from "../utils/validateRegister";
+import { sendEmail } from "../utils/sendEmail";
+import { v4 } from "uuid";
 
 @Resolver(() => User)
 export class UserResolver {
+  @Mutation(() => Boolean)
+  async forgotPassword(
+    @Ctx() { prisma, req, redis }: ApolloContext,
+    @Args() args: UserForgotPasswordArgs
+  ) {
+    const user = await prisma.user.findUnique({
+      where: { email: args.data.email },
+    });
+
+    if (!user) {
+      return true;
+    }
+
+    const token = v4();
+    redis.set(
+      __FORGET_PASSWORD_PREFIX__ + token,
+      user.id,
+      "EX",
+      1000 * 60 * 60 * 24 * 3 // 3 days
+    );
+
+    await sendEmail({
+      to: args.data.email,
+      text: `<a href='http://localhost:3000/forgot-password/${token}'>Reset Password</a>`,
+    });
+
+    return true;
+  }
+
   // Returns object representing user
   @Query(() => User, { nullable: true })
   async me(@Ctx() { prisma, req }: ApolloContext) {
@@ -27,44 +63,16 @@ export class UserResolver {
     @Ctx() { prisma, req }: ApolloContext,
     @Args() args: UserAuthArgs
   ): Promise<UserResponse> {
-    // Check if email already exists
-    const isUserExist = await prisma.user.findUnique({
+    // Validate provided data
+    const doesUserExist = await prisma.user.findUnique({
       where: {
         email: args.data.email,
       },
     });
-    if (isUserExist !== null) {
+    const errors = validateRegister(doesUserExist, args);
+    if (errors) {
       return {
-        errors: [
-          {
-            field: "email",
-            message: "Provided email address is already in use.",
-          },
-        ],
-      };
-    }
-
-    // Check email length before register
-    if (args.data.email.length <= 2) {
-      return {
-        errors: [
-          {
-            field: "email",
-            message: "Length must be greater than 2.",
-          },
-        ],
-      };
-    }
-
-    // Check password length before register
-    if (args.data.password.length <= 7) {
-      return {
-        errors: [
-          {
-            field: "password",
-            message: "Password length must contain at least 8 characters.",
-          },
-        ],
+        errors,
       };
     }
 
