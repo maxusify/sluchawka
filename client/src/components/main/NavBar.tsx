@@ -19,48 +19,51 @@ type NavBarUserSectionProps = {};
 
 const NavBarUserSection: React.FC<NavBarUserSectionProps> = (props) => {
   const router = useRouter();
+
   const [{ data, fetching }] = useMeQuery({
     pause: isServer(),
   });
+
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   let body = null;
 
-  if (fetching) {
-    body = null;
-  } else if (!data?.me) {
-    body = (
-      <ButtonGroup size="sm" colorScheme="red">
-        <Button
-          variant="solid"
-          rounded="xl"
-          onClick={() => router.push("/register")}
-        >
-          Sign up
-        </Button>
-        <Button
-          variant="outline"
-          rounded="xl"
-          onClick={() => router.push("/login")}
-        >
-          Log in
-        </Button>
-      </ButtonGroup>
-    );
-  } else {
-    body = (
-      <ButtonGroup isAttached size="sm" colorScheme="red">
-        <Button rounded="xl">{data.me.email}</Button>
-        <IconButton
-          rounded="xl"
-          icon={<Icon icon="ant-design:logout-outlined" />}
-          aria-label="Log out button"
-          onClick={() => logout()}
-          isLoading={logoutFetching}
-        />
-      </ButtonGroup>
-    );
+  if (typeof window !== "undefined") {
+    if (fetching) {
+      body = null;
+    } else if (!data?.me) {
+      body = (
+        <ButtonGroup size="sm" colorScheme="red">
+          <Button
+            variant="solid"
+            rounded="xl"
+            onClick={() => router.push("/register")}
+          >
+            Sign up
+          </Button>
+          <Button
+            variant="outline"
+            rounded="xl"
+            onClick={() => router.push("/login")}
+          >
+            Log in
+          </Button>
+        </ButtonGroup>
+      );
+    } else {
+      body = (
+        <ButtonGroup isAttached size="sm" colorScheme="red">
+          <Button rounded="xl">{data.me.email}</Button>
+          <IconButton
+            rounded="xl"
+            icon={<Icon icon="ant-design:logout-outlined" />}
+            aria-label="Log out button"
+            onClick={() => logout()}
+            isLoading={logoutFetching}
+          />
+        </ButtonGroup>
+      );
+    }
   }
-
   return <Box fontFamily="Jost">{body}</Box>;
 };
 

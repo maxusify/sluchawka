@@ -1,13 +1,27 @@
-import { Flex, Heading, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { NextPage } from "next";
+import { withUrqlClient } from "next-urql";
 import router from "next/router";
 import React from "react";
 import { InputField } from "../../components";
 import { useChangePasswordMutation } from "../../lib/generated/graphql";
+import { createUrqlClient } from "../../utils/createUrqlClient";
+import { toErrorMap } from "../../utils/toErrorMap";
 
 const ForgotPassword: NextPage<{ token: string }> = ({ token }) => {
   const [, changePassword] = useChangePasswordMutation();
+
+  const [tokenError, setTokenError] = React.useState("");
+
   return (
     <Flex
       h="100vh"
@@ -39,7 +53,13 @@ const ForgotPassword: NextPage<{ token: string }> = ({ token }) => {
                 newPassword: values.newPassword,
               },
             });
-            if (response.data?.changePassword.user) {
+            if (response.data?.changePassword.errors) {
+              const errorMap = toErrorMap(response.data.changePassword.errors);
+              if ("token" in errorMap) {
+                setTokenError(errorMap.token);
+              }
+              setErrors(errorMap);
+            } else {
               router.push("/");
             }
           }}
@@ -59,12 +79,19 @@ const ForgotPassword: NextPage<{ token: string }> = ({ token }) => {
                 variant="outline"
                 isLoading={isSubmitting}
               >
-                Login
+                Save
               </Button>
             </Form>
           )}
         </Formik>
       </Flex>
+      <Alert status="error" hidden={!tokenError ? true : false}>
+        <AlertIcon />
+        <AlertTitle>Oops...</AlertTitle>
+        <AlertDescription>
+          Your password recovery token may be invalid.
+        </AlertDescription>
+      </Alert>
     </Flex>
   );
 };
@@ -75,4 +102,4 @@ ForgotPassword.getInitialProps = ({ query }) => {
   };
 };
 
-export default ForgotPassword;
+export default withUrqlClient(createUrqlClient, { ssr: false })(ForgotPassword);

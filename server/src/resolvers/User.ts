@@ -33,10 +33,11 @@ export class UserResolver {
         ],
       };
     }
+
+    const token = __FORGET_PASSWORD_PREFIX__ + args.data.token;
+
     // Get user id from the token
-    const userId = await redis.get(
-      __FORGET_PASSWORD_PREFIX__ + args.data.token
-    );
+    const userId = await redis.get(token);
     if (!userId) {
       return {
         errors: [
@@ -82,7 +83,7 @@ export class UserResolver {
       };
     }
     // Remove token from redis
-    await redis.del(__FORGET_PASSWORD_PREFIX__ + token);
+    await redis.del(token);
     // Login user after changing password
     req.session.userId = user.id;
     // Return user
