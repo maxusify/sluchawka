@@ -34,7 +34,7 @@ const Login: React.FC<loginProps> = ({}) => {
         alignItems="center"
         flexDir="column"
       >
-        <Heading size="lg" mb="5">
+        <Heading size="xl" color="#E23E57" mb="5" fontFamily="Pacifico">
           Sign-in
         </Heading>
         <Formik
@@ -63,11 +63,16 @@ const Login: React.FC<loginProps> = ({}) => {
                   label="Password"
                   type="password"
                 />
+                <Flex justifyContent="flex-end" fontSize="sm">
+                  <Link href="/forgot-password">
+                    <a>Forgot password?</a>
+                  </Link>
+                </Flex>
                 <Button
                   type="submit"
                   mt="5"
-                  colorScheme="cyan"
-                  variant="outline"
+                  colorScheme="red"
+                  variant="solid"
                   isLoading={isSubmitting}
                 >
                   Login
@@ -76,11 +81,6 @@ const Login: React.FC<loginProps> = ({}) => {
             </Form>
           )}
         </Formik>
-        <Box mt="4">
-          <Link href="/forgot-password">
-            <a>I forgot my password.</a>
-          </Link>
-        </Box>
       </Flex>
     </Flex>
   );
