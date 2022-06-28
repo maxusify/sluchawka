@@ -19,7 +19,7 @@ import { toErrorMap } from "../../utils/toErrorMap";
 
 const ForgotPassword: NextPage<{ token: string }> = ({ token }) => {
   const [, changePassword] = useChangePasswordMutation();
-
+  const [complete, setComplete] = React.useState(false);
   const [tokenError, setTokenError] = React.useState("");
 
   return (
@@ -67,7 +67,7 @@ const ForgotPassword: NextPage<{ token: string }> = ({ token }) => {
           {({ isSubmitting }) => (
             <Form>
               <InputField
-                name="password"
+                name="newPassword"
                 placeholder="password"
                 label="New password"
                 type="password"
