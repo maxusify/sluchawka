@@ -1,4 +1,5 @@
 import { ArgsType, Field } from "type-graphql";
+
 import { UserForgotPasswordInput } from "./UserForgotPasswordInput";
 
 @ArgsType()

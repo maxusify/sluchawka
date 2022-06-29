@@ -1,5 +1,6 @@
-import { User } from "../../../prisma/generated/type-graphql";
 import { Field, ObjectType } from "type-graphql";
+
+import { User } from "../../../prisma/generated/type-graphql";
 
 @ObjectType()
 export class UserResponse {

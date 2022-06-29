@@ -1,21 +1,29 @@
 import { hash, verify } from "argon2";
+import { ApolloContext } from "src/types";
 import { Args, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { v4 } from "uuid";
-import {
-  __COOKIE_NAME__,
-  __FORGET_PASSWORD_PREFIX__,
-} from "../../src/constants";
-import { validateRegister } from "../utils/validateRegister";
-import { sendEmail } from "../utils/sendEmail";
+
 import { User } from "../../prisma/generated/type-graphql";
-import { ApolloContext } from "src/types";
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../../src/constants";
+import { sendEmail } from "../utils/sendEmail";
+import { validateRegister } from "../utils/validateRegister";
+import { UserAuthArgs } from "./types/UserAuthArgs";
 import { UserForgotPasswordArgs } from "./types/UserForgotPasswordArgs";
 import { UserRecoverPasswordArgs } from "./types/UserRecoverPasswordArgs";
-import { UserAuthArgs } from "./types/UserAuthArgs";
 import { UserResponse } from "./types/UserResponse";
 
+/**
+ * UserResolver
+ * Manages operations related with users
+ */
 @Resolver(() => User)
 export class UserResolver {
+  /**
+   * Change password of the user
+   * @param ctx - Provided context by the client
+   * @param args - Provided data by the endpoint
+   * @returns UserResponse of user or errors
+   */
   @Mutation(() => UserResponse)
   async changePassword(
     @Ctx() { redis, prisma, req }: ApolloContext,
@@ -34,7 +42,7 @@ export class UserResolver {
     }
 
     // Prefix + token is equal to key in redis
-    const token = __FORGET_PASSWORD_PREFIX__ + args.data.token;
+    const token = FORGET_PASSWORD_PREFIX + args.data.token;
 
     // Get user id from the token
     const userId = await redis.get(token);
@@ -98,27 +106,42 @@ export class UserResolver {
     return { user };
   }
 
+  /**
+   * Sends an email with a password recovery token to the user
+   * @param ctx - Provided context by the client
+   * @param args - Provided data from the endpoint
+   * @returns true
+   */
   @Mutation(() => Boolean)
   async forgotPassword(
     @Ctx() { prisma, req, redis }: ApolloContext,
     @Args() args: UserForgotPasswordArgs
   ) {
+    // Find user with provided email
     const user = await prisma.user.findUnique({
       where: { email: args.data.email },
     });
 
+    // If user does not exist, return true
+    // Because of security concerns we don't want to tell the user
+    // that account does not exist
     if (!user) {
       return true;
     }
 
+    // Generate a uuid token
     const token = v4();
+
+    // Set new pair in redis
+    // key = prefix + token
     redis.set(
-      __FORGET_PASSWORD_PREFIX__ + token,
+      FORGET_PASSWORD_PREFIX + token,
       user.id,
       "EX",
-      1000 * 60 * 60 * 24 * 3 // 3 days
+      1000 * 60 * 60 * 24 * 3 // expires after 3 days
     );
 
+    // Send an email to the user with recovery link
     await sendEmail({
       to: args.data.email,
       text: `<a href='http://localhost:3000/forgot-password/${token}'>Reset Password</a>`,
@@ -127,18 +150,31 @@ export class UserResolver {
     return true;
   }
 
-  // Returns object representing user
+  /**
+   * Return info to user about themselves
+   * @param ctx - Provided context by the client
+   * @param args - Provided data from the endpoint
+   * @returns promise of user or null
+   */
   @Query(() => User, { nullable: true })
-  async me(@Ctx() { prisma, req }: ApolloContext) {
+  async me(@Ctx() { prisma, req }: ApolloContext): Promise<User | null> {
+    // If session is not set, return null
     if (!req.session.userId) return null;
 
+    // Find user with provided id from the session
     const user = await prisma.user.findUnique({
       where: { id: req.session.userId },
     });
+
+    // return user object
     return user;
   }
-
-  // Register
+  /**
+   * Register new user to the database
+   * @param ctx - Provided context by the client
+   * @param args - Provided data from the endpoint
+   * @returns promise of user or errors
+   */
   @Mutation(() => UserResponse, {
     nullable: false,
   })
@@ -146,12 +182,14 @@ export class UserResolver {
     @Ctx() { prisma, req }: ApolloContext,
     @Args() args: UserAuthArgs
   ): Promise<UserResponse> {
-    // Validate provided data
+    // Check if user already exists in database
     const doesUserExist = await prisma.user.findUnique({
       where: {
         email: args.data.email,
       },
     });
+
+    // Validate user input
     const errors = validateRegister(doesUserExist, args);
     if (errors) {
       return {
@@ -168,9 +206,10 @@ export class UserResolver {
         data: { email: args.data.email, password: hashedPassword },
       });
 
+      // Log in user after registering
       req.session.userId = user.id;
 
-      // return user
+      // return user object
       return { user };
     } catch (error) {
       console.error(error);
@@ -185,6 +224,12 @@ export class UserResolver {
     }
   }
 
+  /**
+   * Create session for the user
+   * @param ctx - Provided context by the client
+   * @param args - Provided data from the endpoint
+   * @returns promise of user or errors
+   */
   @Mutation(() => UserResponse, {
     nullable: false,
   })
@@ -227,17 +272,23 @@ export class UserResolver {
       };
     }
 
+    // Log in user
     req.session.userId = user.id;
 
     // return user
     return { user };
   }
 
+  /**
+   * Return info to user about themselves
+   * @param ctx - Provided context by the client
+   * @returns true if successful, false otherwise
+   */
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: ApolloContext) {
     return new Promise((resolve) =>
       req.session.destroy((err) => {
-        res.clearCookie(__COOKIE_NAME__);
+        res.clearCookie(COOKIE_NAME);
         if (err) {
           console.error(err);
           resolve(false);

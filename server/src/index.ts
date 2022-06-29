@@ -1,42 +1,45 @@
 import "reflect-metadata";
-import express from "express";
+
 import { PrismaClient } from "@prisma/client";
-import {
-  __COOKIE_NAME__,
-  __PORT__,
-  __prod__,
-  __session_secret__,
-} from "./constants";
-import { ApolloServer } from "apollo-server-express";
 import {
   ApolloServerPluginLandingPageDisabled,
   ApolloServerPluginLandingPageGraphQLPlayground,
 } from "apollo-server-core";
-import { buildSchema } from "type-graphql";
-import { UserResolver } from "./resolvers/User";
-import { FindUniqueUserResolver } from "../prisma/generated/type-graphql";
-import Redis from "ioredis";
-import session from "express-session";
+import { ApolloServer } from "apollo-server-express";
 import connectRedis from "connect-redis";
-import { ApolloContext } from "./types";
 import cors from "cors";
+import express from "express";
+import session from "express-session";
+import Redis from "ioredis";
 import morgan from "morgan";
+import { buildSchema } from "type-graphql";
+
+import { FindUniqueUserResolver } from "../prisma/generated/type-graphql";
+import { __PORT__, __prod__, COOKIE_NAME, SESSION_SECRET } from "./constants";
+import { UserResolver } from "./resolvers/User";
+import { ApolloContext } from "./types";
 
 // Prisma Client
 const prisma = new PrismaClient();
 
+/**
+ * async main()
+ * Main function of the app
+ */
 const main = async () => {
-  // Express server
+  // Create express app
   const app = express();
 
-  // Redis Client
+  // Create redis store for sessions
   const RedisStore = connectRedis(session);
+
+  // Create redis Client
   const redis = new Redis();
   redis.on("error", (err) => {
     console.error("Redis Client Error", err);
   });
 
-  // Cors
+  // Cors setup
   app.use(
     cors({
       origin: "http://localhost:3000",
@@ -44,13 +47,13 @@ const main = async () => {
     })
   );
 
-  // Logger
+  // Logger for http
   app.use(morgan("dev"));
 
-  // Session
+  // Session setup
   app.use(
     session({
-      name: __COOKIE_NAME__,
+      name: COOKIE_NAME,
       store: new RedisStore({ client: redis, disableTouch: true }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // ~month
@@ -58,13 +61,13 @@ const main = async () => {
         secure: !__prod__,
         sameSite: "lax", // CSRF
       },
-      secret: __session_secret__!,
+      secret: SESSION_SECRET!,
       resave: false,
       saveUninitialized: false,
     })
   );
 
-  // Apollo server
+  // Apollo server setup
   const appolo = new ApolloServer({
     schema: await buildSchema({
       resolvers: [UserResolver, FindUniqueUserResolver],
@@ -84,7 +87,7 @@ const main = async () => {
   await appolo.start();
   appolo.applyMiddleware({ app, cors: false });
 
-  // Listener
+  // Server listener
   app.listen(__PORT__, () => {
     console.log(`Server started on http://localhost:${__PORT__}`);
   });
