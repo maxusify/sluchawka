@@ -1,19 +1,18 @@
 import { hash, verify } from "argon2";
-import { User } from "../../prisma/generated/type-graphql";
 import { Args, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { UserAuthArgs } from "./types/UserAuthArgs";
-import { UserResponse } from "./types/UserResponse";
-import { ApolloContext } from "src/types";
+import { v4 } from "uuid";
 import {
   __COOKIE_NAME__,
   __FORGET_PASSWORD_PREFIX__,
 } from "../../src/constants";
-import { UserForgotPasswordArgs } from "./types/UserForgotPasswordArgs";
 import { validateRegister } from "../utils/validateRegister";
 import { sendEmail } from "../utils/sendEmail";
-import { v4 } from "uuid";
+import { User } from "../../prisma/generated/type-graphql";
+import { ApolloContext } from "src/types";
+import { UserForgotPasswordArgs } from "./types/UserForgotPasswordArgs";
 import { UserRecoverPasswordArgs } from "./types/UserRecoverPasswordArgs";
-import { token } from "morgan";
+import { UserAuthArgs } from "./types/UserAuthArgs";
+import { UserResponse } from "./types/UserResponse";
 
 @Resolver(() => User)
 export class UserResolver {
@@ -34,6 +33,7 @@ export class UserResolver {
       };
     }
 
+    // Prefix + token is equal to key in redis
     const token = __FORGET_PASSWORD_PREFIX__ + args.data.token;
 
     // Get user id from the token
@@ -48,10 +48,12 @@ export class UserResolver {
         ],
       };
     }
+
     // Find user by value of the token
     const doesUserExist = await prisma.user.findUnique({
       where: { id: userId },
     });
+
     // If user does not exist
     if (!doesUserExist) {
       return {
@@ -65,6 +67,7 @@ export class UserResolver {
     }
     // Hash new password
     const newHashedPassword = await hash(args.data.newPassword);
+
     // Do update user's password
     const user = await prisma.user.update({
       where: { id: userId },
@@ -72,6 +75,8 @@ export class UserResolver {
         password: newHashedPassword,
       },
     });
+
+    // If update failed
     if (!user) {
       return {
         errors: [
@@ -82,10 +87,13 @@ export class UserResolver {
         ],
       };
     }
+
     // Remove token from redis
     await redis.del(token);
+
     // Login user after changing password
     req.session.userId = user.id;
+
     // Return user
     return { user };
   }
