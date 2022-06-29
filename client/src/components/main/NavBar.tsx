@@ -112,7 +112,7 @@ type NavBarContainerProps = {
 
 const NavBarContainer: React.FC<NavBarContainerProps> = (props) => {
   return (
-    <Flex pos="fixed" w="100%" py={"20px"} px={"50px"}>
+    <Flex pos="fixed" w="100%" py={"20px"} px={"20px"}>
       {props.children}
     </Flex>
   );
