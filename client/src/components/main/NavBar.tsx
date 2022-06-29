@@ -1,6 +1,3 @@
-import React from "react";
-import { useLogoutMutation, useMeQuery } from "../../lib/generated/graphql";
-import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -9,11 +6,16 @@ import {
   GridItem,
   IconButton,
   SimpleGrid,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
-import Logo from "./Logo";
-import MenuButton from "./MenuButton";
+import { useRouter } from "next/router";
+import React from "react";
+
+import { useLogoutMutation, useMeQuery } from "../../lib/generated/graphql";
 import { isServer } from "../../utils/isServer";
+import Logo from "./Logo";
+import MenuButton from "./MainMenu";
 
 type NavBarUserSectionProps = {};
 
@@ -32,7 +34,7 @@ const NavBarUserSection: React.FC<NavBarUserSectionProps> = (props) => {
       body = null;
     } else if (!data?.me) {
       body = (
-        <ButtonGroup size="sm" colorScheme="red">
+        <ButtonGroup size="sm" colorScheme="teal">
           <Button
             variant="solid"
             rounded="xl"
@@ -51,7 +53,7 @@ const NavBarUserSection: React.FC<NavBarUserSectionProps> = (props) => {
       );
     } else {
       body = (
-        <ButtonGroup isAttached size="sm" colorScheme="red">
+        <ButtonGroup isAttached size="sm" colorScheme="teal">
           <Button rounded="xl">{data.me.email}</Button>
           <IconButton
             rounded="xl"
@@ -70,20 +72,22 @@ const NavBarUserSection: React.FC<NavBarUserSectionProps> = (props) => {
 type NavBarContent = {};
 
 const NavBarContent: React.FC<NavBarContent> = (props) => {
+  const bgColor = useColorModeValue("gray.100", "#222A39");
+  const shadow = useColorModeValue("lg", "dark-lg");
   return (
     <Flex
       w="100%"
-      bgColor="white"
+      bgColor={bgColor}
       px="5"
       py="3"
       rounded="3xl"
       justifyContent="center"
       alignItems="center"
-      shadow="lg"
+      shadow={shadow}
     >
       <SimpleGrid columns={3} w="100%">
         <GridItem>
-          <Flex justifyContent="flex-start" alignItems="center">
+          <Flex h="100%" justifyContent="flex-start" alignItems="center">
             <MenuButton />
           </Flex>
         </GridItem>
@@ -93,7 +97,7 @@ const NavBarContent: React.FC<NavBarContent> = (props) => {
           </Flex>
         </GridItem>
         <GridItem>
-          <Flex justifyContent="flex-end" alignItems="center">
+          <Flex h="100%" justifyContent="flex-end" alignItems="center">
             <NavBarUserSection />
           </Flex>
         </GridItem>
@@ -125,3 +129,4 @@ const NavBar: React.FC<NavBarProps> = (props) => {
 };
 
 export default NavBar;
+export { NavBarContainer, NavBarContent };

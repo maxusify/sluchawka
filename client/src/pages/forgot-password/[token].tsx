@@ -1,17 +1,18 @@
 import {
-  Flex,
-  Heading,
-  Button,
   Alert,
+  AlertDescription,
   AlertIcon,
   AlertTitle,
-  AlertDescription,
+  Button,
+  Flex,
+  Heading,
 } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
+import { Form, Formik } from "formik";
 import { NextPage } from "next";
 import { withUrqlClient } from "next-urql";
 import router from "next/router";
 import React from "react";
+
 import { InputField } from "../../components";
 import { useChangePasswordMutation } from "../../lib/generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
@@ -19,7 +20,6 @@ import { toErrorMap } from "../../utils/toErrorMap";
 
 const ForgotPassword: NextPage<{ token: string }> = ({ token }) => {
   const [, changePassword] = useChangePasswordMutation();
-  const [complete, setComplete] = React.useState(false);
   const [tokenError, setTokenError] = React.useState("");
 
   return (

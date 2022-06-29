@@ -1,21 +1,19 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 
-type LogoProps = {
-  larger?: string;
-};
+import logo from "../../public/static/images/logo.svg";
 
-const Logo: React.FC<LogoProps> = ({ larger }) => {
+type LogoProps = {};
+
+const Logo: React.FC<LogoProps> = () => {
   return (
-    <Flex justifyContent="center" alignItems="center">
-      <Text
-        fontFamily="Pacifico"
-        fontSize={larger ? "2xl" : "xl"}
-        color="#E23E57"
-        h="100%"
-      >
-        Słuchawka
-      </Text>
+    <Flex justifyContent="center" alignItems="center" h="100%">
+      <Link href="/">
+        <a>
+          <Image src={logo.src} h="10" />
+        </a>
+      </Link>
     </Flex>
   );
 };

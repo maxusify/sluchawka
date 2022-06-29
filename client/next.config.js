@@ -4,4 +4,7 @@ module.exports = {
     defaultLocale: "en",
   },
   trailingSlash: true,
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname,
+  },
 };
