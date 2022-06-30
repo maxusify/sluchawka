@@ -6,7 +6,8 @@
     "start": "next start",
     "gen": "graphql-codegen --config codegen.yml",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "jest --watchAll --verbose"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.2",
@@ -19,6 +20,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^6.3.0",
     "graphql": "^16.5.0",
+    "jest": "^28.1.2",
     "next": "latest",
     "next-urql": "^3.3.3",
     "react": "^18.2.0",
@@ -42,6 +44,7 @@
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
     "@types/cors": "^2.8.12",
+    "@types/jest": "^28.1.3",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
