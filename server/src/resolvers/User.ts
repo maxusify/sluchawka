@@ -200,28 +200,22 @@ export class UserResolver {
     // Hashing password with argon2
     const hashedPassword = await hash(args.data.password);
 
-    try {
-      // Call prisma to create new user
-      const user = await prisma.user.create({
-        data: { email: args.data.email, password: hashedPassword },
-      });
+    // Call prisma to create new user
+    const user = await prisma.user.create({
+      data: { email: args.data.email, password: hashedPassword },
+    });
 
-      // Log in user after registering
-      req.session.userId = user.id;
-
-      // return user object
-      return { user };
-    } catch (error) {
-      console.error(error);
+    if (!user) {
       return {
-        errors: [
-          {
-            field: "null",
-            message: "Internal server error.",
-          },
-        ],
+        errors: [{ field: "", message: "Error creating user." }],
       };
     }
+
+    // Log in user after registering
+    if (req) req.session.userId = user.id;
+
+    // return user object
+    return { user };
   }
 
   /**
@@ -273,7 +267,7 @@ export class UserResolver {
     }
 
     // Log in user
-    req.session.userId = user.id;
+    if (req) req.session.userId = user.id;
 
     // return user
     return { user };
