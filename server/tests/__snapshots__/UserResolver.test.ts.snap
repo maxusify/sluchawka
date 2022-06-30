@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Resolver Creates new user correctly 1`] = `
+Object {
+  "data": Object {
+    "register": Object {
+      "errors": Array [
+        Object {
+          "field": "email",
+          "message": "Provided email address is already in use.",
+        },
+      ],
+      "user": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`User Resolver Log in new user correctly 1`] = `
+Object {
+  "data": Object {
+    "login": Object {
+      "errors": null,
+      "user": Object {
+        "createdAt": "2022-06-30T14:05:48.619Z",
+        "email": "test@test.com",
+        "id": "57c2889f-1eb9-47cf-82d8-9d181ae229cf",
+        "updatedAt": "2022-06-30T14:05:48.620Z",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
