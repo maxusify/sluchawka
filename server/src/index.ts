@@ -1,23 +1,13 @@
 import "reflect-metadata";
 
 import { PrismaClient } from "@prisma/client";
-import {
-  ApolloServerPluginLandingPageDisabled,
-  ApolloServerPluginLandingPageGraphQLPlayground,
-} from "apollo-server-core";
-import { ApolloServer } from "apollo-server-express";
-import connectRedis from "connect-redis";
 import cors from "cors";
 import express from "express";
-import session from "express-session";
-import Redis from "ioredis";
 import morgan from "morgan";
-import { buildSchema } from "type-graphql";
-
-import { FindUniqueUserResolver } from "../prisma/generated/type-graphql";
+import session from "express-session";
 import { __PORT__, __prod__, COOKIE_NAME, SESSION_SECRET } from "./constants";
-import { UserResolver } from "./resolvers/User";
-import { ApolloContext } from "./types";
+import { createRedisClient, RedisStore } from "./utils/createRedisClient";
+import { createApolloServer } from "./utils/createApolloServer";
 
 // Prisma Client
 const prisma = new PrismaClient();
@@ -29,15 +19,6 @@ const prisma = new PrismaClient();
 const main = async () => {
   // Create express app
   const app = express();
-
-  // Create redis store for sessions
-  const RedisStore = connectRedis(session);
-
-  // Create redis Client
-  const redis = new Redis();
-  redis.on("error", (err) => {
-    console.error("Redis Client Error", err);
-  });
 
   // Cors setup
   app.use(
@@ -54,7 +35,10 @@ const main = async () => {
   app.use(
     session({
       name: COOKIE_NAME,
-      store: new RedisStore({ client: redis, disableTouch: true }),
+      store: new RedisStore({
+        client: createRedisClient(),
+        disableTouch: true,
+      }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // ~month
         httpOnly: true,
@@ -68,22 +52,7 @@ const main = async () => {
   );
 
   // Apollo server setup
-  const appolo = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [UserResolver, FindUniqueUserResolver],
-      validate: false,
-    }),
-    context: ({ req, res }): ApolloContext => ({
-      prisma,
-      req,
-      res,
-      redis,
-    }),
-    plugins: [
-      ApolloServerPluginLandingPageGraphQLPlayground(),
-      ApolloServerPluginLandingPageDisabled(),
-    ],
-  });
+  const appolo = await createApolloServer();
   await appolo.start();
   appolo.applyMiddleware({ app, cors: false });
 
