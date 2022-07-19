@@ -9,11 +9,6 @@ import { UserProfileCreateNestedOneWithoutPostsInput } from "../inputs/UserProfi
   isAbstract: true
 })
 export class UserPostCreateInput {
-  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutCreatedPostsInput, {
-    nullable: false
-  })
-  author!: UserCreateNestedOneWithoutCreatedPostsInput;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -33,6 +28,11 @@ export class UserPostCreateInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutCreatedPostsInput, {
+    nullable: false
+  })
+  author!: UserCreateNestedOneWithoutCreatedPostsInput;
 
   @TypeGraphQL.Field(_type => UserProfileCreateNestedOneWithoutPostsInput, {
     nullable: true

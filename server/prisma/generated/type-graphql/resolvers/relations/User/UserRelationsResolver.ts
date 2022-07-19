@@ -13,39 +13,6 @@ import { transformFields, getPrismaFromContext, transformCountFieldIntoSelectRel
 
 @TypeGraphQL.Resolver(_of => User)
 export class UserRelationsResolver {
-  @TypeGraphQL.FieldResolver(_type => UserProfile, {
-    nullable: true
-  })
-  async profile(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any): Promise<UserProfile | null> {
-    return getPrismaFromContext(ctx).user.findUnique({
-      where: {
-        id: user.id,
-      },
-    }).profile({});
-  }
-
-  @TypeGraphQL.FieldResolver(_type => [UserPost], {
-    nullable: false
-  })
-  async createdPosts(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Args() args: UserCreatedPostsArgs): Promise<UserPost[]> {
-    return getPrismaFromContext(ctx).user.findUnique({
-      where: {
-        id: user.id,
-      },
-    }).createdPosts(args);
-  }
-
-  @TypeGraphQL.FieldResolver(_type => [UserProfileComments], {
-    nullable: false
-  })
-  async createdComments(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Args() args: UserCreatedCommentsArgs): Promise<UserProfileComments[]> {
-    return getPrismaFromContext(ctx).user.findUnique({
-      where: {
-        id: user.id,
-      },
-    }).createdComments(args);
-  }
-
   @TypeGraphQL.FieldResolver(_type => [Playlist], {
     nullable: false
   })
@@ -66,5 +33,38 @@ export class UserRelationsResolver {
         id: user.id,
       },
     }).createdSongs(args);
+  }
+
+  @TypeGraphQL.FieldResolver(_type => [UserPost], {
+    nullable: false
+  })
+  async createdPosts(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Args() args: UserCreatedPostsArgs): Promise<UserPost[]> {
+    return getPrismaFromContext(ctx).user.findUnique({
+      where: {
+        id: user.id,
+      },
+    }).createdPosts(args);
+  }
+
+  @TypeGraphQL.FieldResolver(_type => UserProfile, {
+    nullable: true
+  })
+  async profile(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any): Promise<UserProfile | null> {
+    return getPrismaFromContext(ctx).user.findUnique({
+      where: {
+        id: user.id,
+      },
+    }).profile({});
+  }
+
+  @TypeGraphQL.FieldResolver(_type => [UserProfileComments], {
+    nullable: false
+  })
+  async createdComments(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Args() args: UserCreatedCommentsArgs): Promise<UserProfileComments[]> {
+    return getPrismaFromContext(ctx).user.findUnique({
+      where: {
+        id: user.id,
+      },
+    }).createdComments(args);
   }
 }

@@ -29,13 +29,6 @@ export class User {
   })
   email!: string;
 
-  @TypeGraphQL.Field(_type => Boolean, {
-    nullable: false
-  })
-  emailVerified!: boolean;
-
-  password?: string;
-
   @TypeGraphQL.Field(_type => Date, {
     nullable: false
   })
@@ -45,6 +38,13 @@ export class User {
     nullable: false
   })
   updatedAt!: Date;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: false
+  })
+  emailVerified!: boolean;
+
+  password?: string;
 
   @TypeGraphQL.Field(_type => UserRole, {
     nullable: false
@@ -56,15 +56,15 @@ export class User {
   })
   picture?: string | null;
 
-  profile?: UserProfile | null;
-
-  createdPosts?: UserPost[];
-
-  createdComments?: UserProfileComments[];
-
   createdPlaylists?: Playlist[];
 
   createdSongs?: Song[];
+
+  createdPosts?: UserPost[];
+
+  profile?: UserProfile | null;
+
+  createdComments?: UserProfileComments[];
 
   @TypeGraphQL.Field(_type => UserCount, {
     nullable: true

@@ -23,16 +23,6 @@ export class UserCreateManyInput {
   })
   email!: string;
 
-  @TypeGraphQL.Field(_type => Boolean, {
-    nullable: true
-  })
-  emailVerified?: boolean | undefined;
-
-  @TypeGraphQL.Field(_type => String, {
-    nullable: false
-  })
-  password!: string;
-
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })
@@ -42,6 +32,16 @@ export class UserCreateManyInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  emailVerified?: boolean | undefined;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  password!: string;
 
   @TypeGraphQL.Field(_type => UserRole, {
     nullable: true

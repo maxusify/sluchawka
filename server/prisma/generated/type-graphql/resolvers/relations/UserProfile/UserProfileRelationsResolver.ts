@@ -22,17 +22,6 @@ export class UserProfileRelationsResolver {
     }).user({});
   }
 
-  @TypeGraphQL.FieldResolver(_type => UserFavoriteSongs, {
-    nullable: true
-  })
-  async favSongs(@TypeGraphQL.Root() userProfile: UserProfile, @TypeGraphQL.Ctx() ctx: any): Promise<UserFavoriteSongs | null> {
-    return getPrismaFromContext(ctx).userProfile.findUnique({
-      where: {
-        id: userProfile.id,
-      },
-    }).favSongs({});
-  }
-
   @TypeGraphQL.FieldResolver(_type => UserFavoritePlaylists, {
     nullable: true
   })
@@ -42,6 +31,17 @@ export class UserProfileRelationsResolver {
         id: userProfile.id,
       },
     }).favPlaylists({});
+  }
+
+  @TypeGraphQL.FieldResolver(_type => UserFavoriteSongs, {
+    nullable: true
+  })
+  async favSongs(@TypeGraphQL.Root() userProfile: UserProfile, @TypeGraphQL.Ctx() ctx: any): Promise<UserFavoriteSongs | null> {
+    return getPrismaFromContext(ctx).userProfile.findUnique({
+      where: {
+        id: userProfile.id,
+      },
+    }).favSongs({});
   }
 
   @TypeGraphQL.FieldResolver(_type => [UserPost], {

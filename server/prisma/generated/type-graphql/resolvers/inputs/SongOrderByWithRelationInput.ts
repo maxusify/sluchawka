@@ -20,11 +20,6 @@ export class SongOrderByWithRelationInput {
   })
   title?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
-    nullable: true
-  })
-  author?: UserOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
@@ -40,13 +35,18 @@ export class SongOrderByWithRelationInput {
   })
   updatedAt?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserFavoriteSongsOrderByWithRelationInput, {
-    nullable: true
-  })
-  UserFavoriteSongs?: UserFavoriteSongsOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
   userFavoriteSongsId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
+    nullable: true
+  })
+  author?: UserOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserFavoriteSongsOrderByWithRelationInput, {
+    nullable: true
+  })
+  UserFavoriteSongs?: UserFavoriteSongsOrderByWithRelationInput | undefined;
 }

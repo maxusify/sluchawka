@@ -31,16 +31,6 @@ export class UserUpdateWithoutCreatedPostsInput {
   })
   email?: StringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => BoolFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  emailVerified?: BoolFieldUpdateOperationsInput | undefined;
-
-  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  password?: StringFieldUpdateOperationsInput | undefined;
-
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -50,6 +40,16 @@ export class UserUpdateWithoutCreatedPostsInput {
     nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => BoolFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  emailVerified?: BoolFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  password?: StringFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => EnumUserRoleFieldUpdateOperationsInput, {
     nullable: true
@@ -61,16 +61,6 @@ export class UserUpdateWithoutCreatedPostsInput {
   })
   picture?: NullableStringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileUpdateOneWithoutUserInput, {
-    nullable: true
-  })
-  profile?: UserProfileUpdateOneWithoutUserInput | undefined;
-
-  @TypeGraphQL.Field(_type => UserProfileCommentsUpdateManyWithoutAuthorInput, {
-    nullable: true
-  })
-  createdComments?: UserProfileCommentsUpdateManyWithoutAuthorInput | undefined;
-
   @TypeGraphQL.Field(_type => PlaylistUpdateManyWithoutAuthorInput, {
     nullable: true
   })
@@ -80,4 +70,14 @@ export class UserUpdateWithoutCreatedPostsInput {
     nullable: true
   })
   createdSongs?: SongUpdateManyWithoutAuthorInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileUpdateOneWithoutUserInput, {
+    nullable: true
+  })
+  profile?: UserProfileUpdateOneWithoutUserInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileCommentsUpdateManyWithoutAuthorInput, {
+    nullable: true
+  })
+  createdComments?: UserProfileCommentsUpdateManyWithoutAuthorInput | undefined;
 }

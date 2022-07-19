@@ -1,13 +1,14 @@
 import "reflect-metadata";
 
-import { PrismaClient } from "@prisma/client";
-import cors from "cors";
 import express from "express";
 import morgan from "morgan";
-import session from "express-session";
-import { __PORT__, __prod__, COOKIE_NAME, SESSION_SECRET } from "./constants";
-import { createRedisClient, RedisStore } from "./utils/createRedisClient";
+import { PrismaClient } from "@prisma/client";
+
 import { createApolloServer } from "./utils/createApolloServer";
+import createSession from "./utils/createSession";
+import createCors from "./utils/createCors";
+
+import { __PORT__ } from "./constants";
 
 // Prisma Client
 const prisma = new PrismaClient();
@@ -21,35 +22,13 @@ const main = async () => {
   const app = express();
 
   // Cors setup
-  app.use(
-    cors({
-      origin: "http://localhost:3000",
-      credentials: true,
-    })
-  );
+  app.use(createCors);
 
   // Logger for http
   app.use(morgan("dev"));
 
   // Session setup
-  app.use(
-    session({
-      name: COOKIE_NAME,
-      store: new RedisStore({
-        client: createRedisClient(),
-        disableTouch: true,
-      }),
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 30, // ~month
-        httpOnly: true,
-        secure: !__prod__,
-        sameSite: "lax", // CSRF
-      },
-      secret: SESSION_SECRET!,
-      resave: false,
-      saveUninitialized: false,
-    })
-  );
+  app.use(createSession);
 
   // Apollo server setup
   const appolo = await createApolloServer();

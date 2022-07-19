@@ -18,16 +18,16 @@ export class UserProfile {
   })
   id!: string;
 
-  user?: User;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
   userId!: string;
 
-  favSongs?: UserFavoriteSongs | null;
+  user?: User;
 
   favPlaylists?: UserFavoritePlaylists | null;
+
+  favSongs?: UserFavoriteSongs | null;
 
   posts?: UserPost[];
 

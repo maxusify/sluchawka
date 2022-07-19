@@ -33,25 +33,25 @@ export class UserProfileWhereInput {
   })
   id?: StringFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserRelationFilter, {
-    nullable: true
-  })
-  user?: UserRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
   userId?: StringFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserFavoriteSongsRelationFilter, {
+  @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true
   })
-  favSongs?: UserFavoriteSongsRelationFilter | undefined;
+  user?: UserRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserFavoritePlaylistsRelationFilter, {
     nullable: true
   })
   favPlaylists?: UserFavoritePlaylistsRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserFavoriteSongsRelationFilter, {
+    nullable: true
+  })
+  favSongs?: UserFavoriteSongsRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserPostListRelationFilter, {
     nullable: true

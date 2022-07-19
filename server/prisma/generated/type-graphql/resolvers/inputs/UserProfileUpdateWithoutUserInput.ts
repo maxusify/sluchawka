@@ -17,15 +17,15 @@ export class UserProfileUpdateWithoutUserInput {
   })
   id?: StringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserFavoriteSongsUpdateOneWithoutUserProfileInput, {
-    nullable: true
-  })
-  favSongs?: UserFavoriteSongsUpdateOneWithoutUserProfileInput | undefined;
-
   @TypeGraphQL.Field(_type => UserFavoritePlaylistsUpdateOneWithoutUserProfileInput, {
     nullable: true
   })
   favPlaylists?: UserFavoritePlaylistsUpdateOneWithoutUserProfileInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserFavoriteSongsUpdateOneWithoutUserProfileInput, {
+    nullable: true
+  })
+  favSongs?: UserFavoriteSongsUpdateOneWithoutUserProfileInput | undefined;
 
   @TypeGraphQL.Field(_type => UserPostUpdateManyWithoutUserProfileInput, {
     nullable: true

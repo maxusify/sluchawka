@@ -47,16 +47,6 @@ export class UserWhereInput {
   })
   email?: StringFilter | undefined;
 
-  @TypeGraphQL.Field(_type => BoolFilter, {
-    nullable: true
-  })
-  emailVerified?: BoolFilter | undefined;
-
-  @TypeGraphQL.Field(_type => StringFilter, {
-    nullable: true
-  })
-  password?: StringFilter | undefined;
-
   @TypeGraphQL.Field(_type => DateTimeFilter, {
     nullable: true
   })
@@ -66,6 +56,16 @@ export class UserWhereInput {
     nullable: true
   })
   updatedAt?: DateTimeFilter | undefined;
+
+  @TypeGraphQL.Field(_type => BoolFilter, {
+    nullable: true
+  })
+  emailVerified?: BoolFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringFilter, {
+    nullable: true
+  })
+  password?: StringFilter | undefined;
 
   @TypeGraphQL.Field(_type => EnumUserRoleFilter, {
     nullable: true
@@ -77,21 +77,6 @@ export class UserWhereInput {
   })
   picture?: StringNullableFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileRelationFilter, {
-    nullable: true
-  })
-  profile?: UserProfileRelationFilter | undefined;
-
-  @TypeGraphQL.Field(_type => UserPostListRelationFilter, {
-    nullable: true
-  })
-  createdPosts?: UserPostListRelationFilter | undefined;
-
-  @TypeGraphQL.Field(_type => UserProfileCommentsListRelationFilter, {
-    nullable: true
-  })
-  createdComments?: UserProfileCommentsListRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => PlaylistListRelationFilter, {
     nullable: true
   })
@@ -101,4 +86,19 @@ export class UserWhereInput {
     nullable: true
   })
   createdSongs?: SongListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserPostListRelationFilter, {
+    nullable: true
+  })
+  createdPosts?: UserPostListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileRelationFilter, {
+    nullable: true
+  })
+  profile?: UserProfileRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileCommentsListRelationFilter, {
+    nullable: true
+  })
+  createdComments?: UserProfileCommentsListRelationFilter | undefined;
 }

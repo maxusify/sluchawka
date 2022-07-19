@@ -15,15 +15,15 @@ export class UserFavoriteSongsOrderByWithRelationInput {
   })
   id?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileOrderByWithRelationInput, {
-    nullable: true
-  })
-  userProfile?: UserProfileOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
   userProfileId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileOrderByWithRelationInput, {
+    nullable: true
+  })
+  userProfile?: UserProfileOrderByWithRelationInput | undefined;
 
   @TypeGraphQL.Field(_type => SongOrderByRelationAggregateInput, {
     nullable: true

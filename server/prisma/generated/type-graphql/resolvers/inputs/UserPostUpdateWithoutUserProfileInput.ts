@@ -10,11 +10,6 @@ import { UserUpdateOneRequiredWithoutCreatedPostsInput } from "../inputs/UserUpd
   isAbstract: true
 })
 export class UserPostUpdateWithoutUserProfileInput {
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutCreatedPostsInput, {
-    nullable: true
-  })
-  author?: UserUpdateOneRequiredWithoutCreatedPostsInput | undefined;
-
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -34,4 +29,9 @@ export class UserPostUpdateWithoutUserProfileInput {
     nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutCreatedPostsInput, {
+    nullable: true
+  })
+  author?: UserUpdateOneRequiredWithoutCreatedPostsInput | undefined;
 }

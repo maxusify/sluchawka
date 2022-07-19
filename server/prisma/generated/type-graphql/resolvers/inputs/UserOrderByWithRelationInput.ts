@@ -31,22 +31,22 @@ export class UserOrderByWithRelationInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  emailVerified?: "asc" | "desc" | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true
-  })
-  password?: "asc" | "desc" | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true
-  })
   createdAt?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
   updatedAt?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  emailVerified?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  password?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
@@ -58,21 +58,6 @@ export class UserOrderByWithRelationInput {
   })
   picture?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileOrderByWithRelationInput, {
-    nullable: true
-  })
-  profile?: UserProfileOrderByWithRelationInput | undefined;
-
-  @TypeGraphQL.Field(_type => UserPostOrderByRelationAggregateInput, {
-    nullable: true
-  })
-  createdPosts?: UserPostOrderByRelationAggregateInput | undefined;
-
-  @TypeGraphQL.Field(_type => UserProfileCommentsOrderByRelationAggregateInput, {
-    nullable: true
-  })
-  createdComments?: UserProfileCommentsOrderByRelationAggregateInput | undefined;
-
   @TypeGraphQL.Field(_type => PlaylistOrderByRelationAggregateInput, {
     nullable: true
   })
@@ -82,4 +67,19 @@ export class UserOrderByWithRelationInput {
     nullable: true
   })
   createdSongs?: SongOrderByRelationAggregateInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserPostOrderByRelationAggregateInput, {
+    nullable: true
+  })
+  createdPosts?: UserPostOrderByRelationAggregateInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileOrderByWithRelationInput, {
+    nullable: true
+  })
+  profile?: UserProfileOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileCommentsOrderByRelationAggregateInput, {
+    nullable: true
+  })
+  createdComments?: UserProfileCommentsOrderByRelationAggregateInput | undefined;
 }

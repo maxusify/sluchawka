@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,104 +12,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User roles
-enum UserRole {
-  NORMAL
-  MODERATOR
-  ADMIN
-}
-
-// User
 model User {
-  id               String                 @id @default(uuid())
+  id               String                @id @default(uuid())
   name             String?
-  email            String                 @unique
-  emailVerified    Boolean                @default(false)
+  email            String                @unique
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  emailVerified    Boolean               @default(false)
   /// @TypeGraphQL.omit(output: true)
   password         String
-  createdAt        DateTime               @default(now())
-  updatedAt        DateTime               @updatedAt
-  role             UserRole               @default(NORMAL)
+  role             UserRole              @default(NORMAL)
   picture          String?
-  profile          UserProfile?
-  createdPosts     UserPost[]
-  createdComments  UserProfileComments[]
   createdPlaylists Playlist[]
   createdSongs     Song[]
+  createdPosts     UserPost[]
+  profile          UserProfile?
+  createdComments  UserProfileComments[]
 }
 
-// User profile
 model UserProfile {
   id           String                 @id @unique
-  user         User                   @relation(fields: [userId], references: [id])
   userId       String                 @unique
-  favSongs     UserFavoriteSongs?
+  user         User                   @relation(fields: [userId], references: [id])
   favPlaylists UserFavoritePlaylists?
+  favSongs     UserFavoriteSongs?
   posts        UserPost[]
   comments     UserProfileComments[]
 }
 
-// User favorite songs
 model UserFavoriteSongs {
   id            String      @id @default(uuid())
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   userProfileId String      @unique
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   songs         Song[]
 }
 
-// User favorite playlists
 model UserFavoritePlaylists {
   id            String      @id @default(uuid())
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   userProfileId String      @unique
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
   playlists     Playlist[]
 }
 
-// User blog posts
 model UserPost {
   id            Int          @id @default(autoincrement())
-  author        User         @relation(fields: [authorId], references: [id])
   authorId      String
   title         String       @db.VarChar(255)
-  content       String       @db.Text
+  content       String
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
   userProfileId String?
+  author        User         @relation(fields: [authorId], references: [id])
+  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
 }
 
-// User profile comments
 model UserProfileComments {
   id            Int          @id @default(autoincrement())
-  author        User         @relation(fields: [authorId], references: [id])
   authorId      String
   content       String       @db.VarChar(255)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
   userProfileId String?
+  author        User         @relation(fields: [authorId], references: [id])
+  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
 }
 
-// Playlist
 model Playlist {
   id                      String                 @id @default(uuid())
   title                   String                 @db.VarChar(64)
-  author                  User                   @relation(fields: [authorId], references: [id])
   authorId                String
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @updatedAt
-  userFavoritePlaylists   UserFavoritePlaylists? @relation(fields: [userFavoritePlaylistsId], references: [id])
   userFavoritePlaylistsId String?
+  author                  User                   @relation(fields: [authorId], references: [id])
+  userFavoritePlaylists   UserFavoritePlaylists? @relation(fields: [userFavoritePlaylistsId], references: [id])
 }
 
-// Song
 model Song {
   id                  String             @id @default(uuid())
   title               String             @db.VarChar(64)
-  author              User               @relation(fields: [authorId], references: [id])
   authorId            String
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
-  UserFavoriteSongs   UserFavoriteSongs? @relation(fields: [userFavoriteSongsId], references: [id])
   userFavoriteSongsId String?
+  author              User               @relation(fields: [authorId], references: [id])
+  UserFavoriteSongs   UserFavoriteSongs? @relation(fields: [userFavoriteSongsId], references: [id])
+}
+
+enum UserRole {
+  NORMAL
+  MODERATOR
+  ADMIN
 }

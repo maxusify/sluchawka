@@ -14,8 +14,6 @@ export class UserProfileComments {
   })
   id!: number;
 
-  author?: User;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -36,10 +34,12 @@ export class UserProfileComments {
   })
   updatedAt!: Date;
 
-  userProfile?: UserProfile | null;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
   userProfileId?: string | null;
+
+  author?: User;
+
+  userProfile?: UserProfile | null;
 }

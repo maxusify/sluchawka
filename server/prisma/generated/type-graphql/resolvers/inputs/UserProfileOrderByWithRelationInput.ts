@@ -18,25 +18,25 @@ export class UserProfileOrderByWithRelationInput {
   })
   id?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
-    nullable: true
-  })
-  user?: UserOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
   userId?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserFavoriteSongsOrderByWithRelationInput, {
+  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
     nullable: true
   })
-  favSongs?: UserFavoriteSongsOrderByWithRelationInput | undefined;
+  user?: UserOrderByWithRelationInput | undefined;
 
   @TypeGraphQL.Field(_type => UserFavoritePlaylistsOrderByWithRelationInput, {
     nullable: true
   })
   favPlaylists?: UserFavoritePlaylistsOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserFavoriteSongsOrderByWithRelationInput, {
+    nullable: true
+  })
+  favSongs?: UserFavoriteSongsOrderByWithRelationInput | undefined;
 
   @TypeGraphQL.Field(_type => UserPostOrderByRelationAggregateInput, {
     nullable: true

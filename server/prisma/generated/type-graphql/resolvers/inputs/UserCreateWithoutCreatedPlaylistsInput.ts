@@ -27,16 +27,6 @@ export class UserCreateWithoutCreatedPlaylistsInput {
   })
   email!: string;
 
-  @TypeGraphQL.Field(_type => Boolean, {
-    nullable: true
-  })
-  emailVerified?: boolean | undefined;
-
-  @TypeGraphQL.Field(_type => String, {
-    nullable: false
-  })
-  password!: string;
-
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })
@@ -46,6 +36,16 @@ export class UserCreateWithoutCreatedPlaylistsInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  emailVerified?: boolean | undefined;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  password!: string;
 
   @TypeGraphQL.Field(_type => UserRole, {
     nullable: true
@@ -57,23 +57,23 @@ export class UserCreateWithoutCreatedPlaylistsInput {
   })
   picture?: string | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileCreateNestedOneWithoutUserInput, {
+  @TypeGraphQL.Field(_type => SongCreateNestedManyWithoutAuthorInput, {
     nullable: true
   })
-  profile?: UserProfileCreateNestedOneWithoutUserInput | undefined;
+  createdSongs?: SongCreateNestedManyWithoutAuthorInput | undefined;
 
   @TypeGraphQL.Field(_type => UserPostCreateNestedManyWithoutAuthorInput, {
     nullable: true
   })
   createdPosts?: UserPostCreateNestedManyWithoutAuthorInput | undefined;
 
+  @TypeGraphQL.Field(_type => UserProfileCreateNestedOneWithoutUserInput, {
+    nullable: true
+  })
+  profile?: UserProfileCreateNestedOneWithoutUserInput | undefined;
+
   @TypeGraphQL.Field(_type => UserProfileCommentsCreateNestedManyWithoutAuthorInput, {
     nullable: true
   })
   createdComments?: UserProfileCommentsCreateNestedManyWithoutAuthorInput | undefined;
-
-  @TypeGraphQL.Field(_type => SongCreateNestedManyWithoutAuthorInput, {
-    nullable: true
-  })
-  createdSongs?: SongCreateNestedManyWithoutAuthorInput | undefined;
 }

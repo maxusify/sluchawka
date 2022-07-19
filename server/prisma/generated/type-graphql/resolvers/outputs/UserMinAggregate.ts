@@ -23,16 +23,6 @@ export class UserMinAggregate {
   })
   email!: string | null;
 
-  @TypeGraphQL.Field(_type => Boolean, {
-    nullable: true
-  })
-  emailVerified!: boolean | null;
-
-  @TypeGraphQL.Field(_type => String, {
-    nullable: true
-  })
-  password!: string | null;
-
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })
@@ -42,6 +32,16 @@ export class UserMinAggregate {
     nullable: true
   })
   updatedAt!: Date | null;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  emailVerified!: boolean | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  password!: string | null;
 
   @TypeGraphQL.Field(_type => UserRole, {
     nullable: true

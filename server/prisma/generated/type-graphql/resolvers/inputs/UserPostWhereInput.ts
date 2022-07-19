@@ -33,11 +33,6 @@ export class UserPostWhereInput {
   })
   id?: IntFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserRelationFilter, {
-    nullable: true
-  })
-  author?: UserRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
@@ -63,13 +58,18 @@ export class UserPostWhereInput {
   })
   updatedAt?: DateTimeFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileRelationFilter, {
-    nullable: true
-  })
-  userProfile?: UserProfileRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringNullableFilter, {
     nullable: true
   })
   userProfileId?: StringNullableFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserRelationFilter, {
+    nullable: true
+  })
+  author?: UserRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileRelationFilter, {
+    nullable: true
+  })
+  userProfile?: UserProfileRelationFilter | undefined;
 }

@@ -30,15 +30,15 @@ export class UserFavoriteSongsWhereInput {
   })
   id?: StringFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileRelationFilter, {
-    nullable: true
-  })
-  userProfile?: UserProfileRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
   userProfileId?: StringFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileRelationFilter, {
+    nullable: true
+  })
+  userProfile?: UserProfileRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => SongListRelationFilter, {
     nullable: true

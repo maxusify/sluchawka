@@ -15,11 +15,6 @@ export class UserProfileCommentsOrderByWithRelationInput {
   })
   id?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
-    nullable: true
-  })
-  author?: UserOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
@@ -40,13 +35,18 @@ export class UserProfileCommentsOrderByWithRelationInput {
   })
   updatedAt?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileOrderByWithRelationInput, {
-    nullable: true
-  })
-  userProfile?: UserProfileOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
   userProfileId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
+    nullable: true
+  })
+  author?: UserOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserProfileOrderByWithRelationInput, {
+    nullable: true
+  })
+  userProfile?: UserProfileOrderByWithRelationInput | undefined;
 }

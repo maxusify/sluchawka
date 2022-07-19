@@ -21,15 +21,15 @@ export class UserProfileCreateWithoutCommentsInput {
   })
   user!: UserCreateNestedOneWithoutProfileInput;
 
-  @TypeGraphQL.Field(_type => UserFavoriteSongsCreateNestedOneWithoutUserProfileInput, {
-    nullable: true
-  })
-  favSongs?: UserFavoriteSongsCreateNestedOneWithoutUserProfileInput | undefined;
-
   @TypeGraphQL.Field(_type => UserFavoritePlaylistsCreateNestedOneWithoutUserProfileInput, {
     nullable: true
   })
   favPlaylists?: UserFavoritePlaylistsCreateNestedOneWithoutUserProfileInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserFavoriteSongsCreateNestedOneWithoutUserProfileInput, {
+    nullable: true
+  })
+  favSongs?: UserFavoriteSongsCreateNestedOneWithoutUserProfileInput | undefined;
 
   @TypeGraphQL.Field(_type => UserPostCreateNestedManyWithoutUserProfileInput, {
     nullable: true

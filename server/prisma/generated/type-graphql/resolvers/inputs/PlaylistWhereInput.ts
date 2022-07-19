@@ -37,11 +37,6 @@ export class PlaylistWhereInput {
   })
   title?: StringFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserRelationFilter, {
-    nullable: true
-  })
-  author?: UserRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
@@ -57,13 +52,18 @@ export class PlaylistWhereInput {
   })
   updatedAt?: DateTimeFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserFavoritePlaylistsRelationFilter, {
-    nullable: true
-  })
-  userFavoritePlaylists?: UserFavoritePlaylistsRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringNullableFilter, {
     nullable: true
   })
   userFavoritePlaylistsId?: StringNullableFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserRelationFilter, {
+    nullable: true
+  })
+  author?: UserRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserFavoritePlaylistsRelationFilter, {
+    nullable: true
+  })
+  userFavoritePlaylists?: UserFavoritePlaylistsRelationFilter | undefined;
 }

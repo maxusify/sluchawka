@@ -31,16 +31,6 @@ export class UserUpdateWithoutCreatedSongsInput {
   })
   email?: StringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => BoolFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  emailVerified?: BoolFieldUpdateOperationsInput | undefined;
-
-  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  password?: StringFieldUpdateOperationsInput | undefined;
-
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -50,6 +40,16 @@ export class UserUpdateWithoutCreatedSongsInput {
     nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => BoolFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  emailVerified?: BoolFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  password?: StringFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => EnumUserRoleFieldUpdateOperationsInput, {
     nullable: true
@@ -61,23 +61,23 @@ export class UserUpdateWithoutCreatedSongsInput {
   })
   picture?: NullableStringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserProfileUpdateOneWithoutUserInput, {
+  @TypeGraphQL.Field(_type => PlaylistUpdateManyWithoutAuthorInput, {
     nullable: true
   })
-  profile?: UserProfileUpdateOneWithoutUserInput | undefined;
+  createdPlaylists?: PlaylistUpdateManyWithoutAuthorInput | undefined;
 
   @TypeGraphQL.Field(_type => UserPostUpdateManyWithoutAuthorInput, {
     nullable: true
   })
   createdPosts?: UserPostUpdateManyWithoutAuthorInput | undefined;
 
+  @TypeGraphQL.Field(_type => UserProfileUpdateOneWithoutUserInput, {
+    nullable: true
+  })
+  profile?: UserProfileUpdateOneWithoutUserInput | undefined;
+
   @TypeGraphQL.Field(_type => UserProfileCommentsUpdateManyWithoutAuthorInput, {
     nullable: true
   })
   createdComments?: UserProfileCommentsUpdateManyWithoutAuthorInput | undefined;
-
-  @TypeGraphQL.Field(_type => PlaylistUpdateManyWithoutAuthorInput, {
-    nullable: true
-  })
-  createdPlaylists?: PlaylistUpdateManyWithoutAuthorInput | undefined;
 }

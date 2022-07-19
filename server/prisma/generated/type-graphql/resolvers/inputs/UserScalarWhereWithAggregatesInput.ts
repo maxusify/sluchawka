@@ -42,16 +42,6 @@ export class UserScalarWhereWithAggregatesInput {
   })
   email?: StringWithAggregatesFilter | undefined;
 
-  @TypeGraphQL.Field(_type => BoolWithAggregatesFilter, {
-    nullable: true
-  })
-  emailVerified?: BoolWithAggregatesFilter | undefined;
-
-  @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
-    nullable: true
-  })
-  password?: StringWithAggregatesFilter | undefined;
-
   @TypeGraphQL.Field(_type => DateTimeWithAggregatesFilter, {
     nullable: true
   })
@@ -61,6 +51,16 @@ export class UserScalarWhereWithAggregatesInput {
     nullable: true
   })
   updatedAt?: DateTimeWithAggregatesFilter | undefined;
+
+  @TypeGraphQL.Field(_type => BoolWithAggregatesFilter, {
+    nullable: true
+  })
+  emailVerified?: BoolWithAggregatesFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
+    nullable: true
+  })
+  password?: StringWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => EnumUserRoleWithAggregatesFilter, {
     nullable: true

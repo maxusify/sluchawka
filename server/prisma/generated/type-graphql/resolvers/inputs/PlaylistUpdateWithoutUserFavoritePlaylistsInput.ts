@@ -20,11 +20,6 @@ export class PlaylistUpdateWithoutUserFavoritePlaylistsInput {
   })
   title?: StringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutCreatedPlaylistsInput, {
-    nullable: true
-  })
-  author?: UserUpdateOneRequiredWithoutCreatedPlaylistsInput | undefined;
-
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -34,4 +29,9 @@ export class PlaylistUpdateWithoutUserFavoritePlaylistsInput {
     nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutCreatedPlaylistsInput, {
+    nullable: true
+  })
+  author?: UserUpdateOneRequiredWithoutCreatedPlaylistsInput | undefined;
 }

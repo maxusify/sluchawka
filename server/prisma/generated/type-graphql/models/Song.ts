@@ -19,8 +19,6 @@ export class Song {
   })
   title!: string;
 
-  author?: User;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -36,10 +34,12 @@ export class Song {
   })
   updatedAt!: Date;
 
-  UserFavoriteSongs?: UserFavoriteSongs | null;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
   userFavoriteSongsId?: string | null;
+
+  author?: User;
+
+  UserFavoriteSongs?: UserFavoriteSongs | null;
 }

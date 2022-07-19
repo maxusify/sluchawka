@@ -18,11 +18,6 @@ export class SongCreateWithoutUserFavoriteSongsInput {
   })
   title!: string;
 
-  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutCreatedSongsInput, {
-    nullable: false
-  })
-  author!: UserCreateNestedOneWithoutCreatedSongsInput;
-
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })
@@ -32,4 +27,9 @@ export class SongCreateWithoutUserFavoriteSongsInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutCreatedSongsInput, {
+    nullable: false
+  })
+  author!: UserCreateNestedOneWithoutCreatedSongsInput;
 }

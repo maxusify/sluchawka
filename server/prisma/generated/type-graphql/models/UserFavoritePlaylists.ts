@@ -15,12 +15,12 @@ export class UserFavoritePlaylists {
   })
   id!: string;
 
-  userProfile?: UserProfile;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
   userProfileId!: string;
+
+  userProfile?: UserProfile;
 
   playlists?: Playlist[];
 
