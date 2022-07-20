@@ -1,7 +1,7 @@
 import { ApolloServer, ExpressContext } from "apollo-server-express";
 import "reflect-metadata";
 
-import { createApolloServer } from "../src/utils/createApolloServer";
+import createApolloServer from "../src/utils/createApolloServer";
 
 let server: ApolloServer<ExpressContext>;
 

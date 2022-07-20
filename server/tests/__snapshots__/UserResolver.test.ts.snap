@@ -29,10 +29,10 @@ Object {
     "login": Object {
       "errors": null,
       "user": Object {
-        "createdAt": "2022-06-30T14:05:48.619Z",
+        "createdAt": "2022-07-20T21:14:27.823Z",
         "email": "test@test.com",
-        "id": "57c2889f-1eb9-47cf-82d8-9d181ae229cf",
-        "updatedAt": "2022-06-30T14:05:48.620Z",
+        "id": "6f296238-5d37-4e87-957a-f8151efe0c67",
+        "updatedAt": "2022-07-20T21:14:27.824Z",
       },
     },
   },

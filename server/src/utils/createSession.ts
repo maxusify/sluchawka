@@ -1,7 +1,7 @@
-import session from "express-session";
+import session from 'express-session';
 
-import { __PORT__, __prod__, COOKIE_NAME, SESSION_SECRET } from "../constants";
-import { createRedisClient, RedisStore } from "./createRedisClient";
+import { __prod__, COOKIE_NAME, SESSION_SECRET } from '../constants';
+import { createRedisClient, RedisStore } from './createRedisClient';
 
 export default session({
       name: COOKIE_NAME,

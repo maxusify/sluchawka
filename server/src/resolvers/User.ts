@@ -1,16 +1,16 @@
-import { hash, verify } from "argon2";
-import { ApolloContext } from "src/types";
-import { Args, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { v4 } from "uuid";
+import { hash, verify } from 'argon2';
+import { ApolloContext } from 'src/types';
+import { Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { v4 } from 'uuid';
 
-import { User } from "../../prisma/generated/type-graphql";
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../../src/constants";
-import { sendEmail } from "../utils/sendEmail";
-import { validateRegister } from "../utils/validateRegister";
-import { UserAuthArgs } from "./types/UserAuthArgs";
-import { UserForgotPasswordArgs } from "./types/UserForgotPasswordArgs";
-import { UserRecoverPasswordArgs } from "./types/UserRecoverPasswordArgs";
-import { UserResponse } from "./types/UserResponse";
+import { User } from '../../prisma/generated/type-graphql';
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../src/constants';
+import { sendEmail } from '../utils/sendEmail';
+import { validateRegister } from '../utils/validateRegister';
+import { UserAuthArgs } from './types/UserAuthArgs';
+import { UserForgotPasswordArgs } from './types/UserForgotPasswordArgs';
+import { UserRecoverPasswordArgs } from './types/UserRecoverPasswordArgs';
+import { UserResponse } from './types/UserResponse';
 
 /**
  * UserResolver
@@ -280,17 +280,21 @@ export class UserResolver {
    */
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: ApolloContext) {
-    return new Promise((resolve) =>
-      req.session.destroy((err) => {
-        res.clearCookie(COOKIE_NAME);
-        if (err) {
-          console.error(err);
-          resolve(false);
-          return;
-        } else {
-          resolve(true);
-        }
-      })
-    );
+    if (req) {
+      return new Promise((resolve) =>
+        req.session.destroy((err) => {
+          res.clearCookie(COOKIE_NAME);
+          if (err) {
+            console.error(err);
+            resolve(false);
+            return;
+          } else {
+            resolve(true);
+          }
+        })
+      );
+    } else {
+      return "Logout success";
+    }
   }
 }

@@ -2,11 +2,11 @@ import { User } from "prisma/generated/type-graphql";
 import { UserAuthArgs } from "src/resolvers/types/UserAuthArgs";
 
 export const validateRegister = (
-  isUserExist: User | null,
+  doesUserExist: User | null,
   args: UserAuthArgs
 ) => {
   // Check if email already exists
-  if (isUserExist !== null) {
+  if (doesUserExist !== null) {
     return [
       {
         field: "email",
@@ -15,8 +15,9 @@ export const validateRegister = (
     ];
   }
 
+  // Check email length before register
   if (args.data.email.length <= 2) {
-    // Check email length before register
+    
     return [
       {
         field: "email",
@@ -25,8 +26,8 @@ export const validateRegister = (
     ];
   }
 
+  // Check if email contains @ symbol
   if (!args.data.email.includes("@")) {
-    // Check if email contains @ symbol
     return [
       {
         field: "email",
@@ -35,8 +36,8 @@ export const validateRegister = (
     ];
   }
 
+  // Check password length before register
   if (args.data.password.length <= 7) {
-    // Check password length before register
     return [
       {
         field: "password",

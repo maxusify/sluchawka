@@ -1,17 +1,14 @@
-import "reflect-metadata";
+import 'reflect-metadata';
+import "dotenv/config";
 
-import express from "express";
-import morgan from "morgan";
-import { PrismaClient } from "@prisma/client";
+import express from 'express';
+import morgan from 'morgan';
 
-import { createApolloServer } from "./utils/createApolloServer";
-import createSession from "./utils/createSession";
-import createCors from "./utils/createCors";
-
-import { __PORT__ } from "./constants";
-
-// Prisma Client
-const prisma = new PrismaClient();
+import { __PORT__ } from './constants';
+import createApolloServer from './utils/createApolloServer';
+import createCors from './utils/createCors';
+import { disconnectPrismaClient } from './utils/createPrismaClient';
+import createSession from './utils/createSession';
 
 /**
  * async main()
@@ -47,5 +44,5 @@ main()
     throw err;
   })
   .finally(async () => {
-    await prisma.$disconnect();
+    await disconnectPrismaClient();
   });
