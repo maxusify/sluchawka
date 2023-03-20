@@ -1,4 +1,4 @@
-# sluchawka `1.0.0-alpha`
+# sluchawka `0.1.0-alpha`
 
 **Sluchawka** is a music related content and sharing platform build with TypeScript and PostgreSQL.
 
